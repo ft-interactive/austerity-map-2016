@@ -22,19 +22,13 @@ export function drawmaps (mapData) {
 	//Colors by Cynthia Brewer (colorbrewer2.org), To be amended
 	var color = d3.scale.quantize()
 	 	.domain([ 0, 100 ])
-		.range([ "#ffffb2", "#fecc5c", "#fd8d3c", "#f03b20", "#bd0026",]);
+		.range([ "#83cee4", "#76acb8", "#d76f6c", "#efb1af", "#b0516c",]);
 
 	//Create SVG
 	var svg = d3.select("#mapHolder")
 		.append("svg")
 		.attr("width", width)
 		.attr("height", height);
-
-	var lookup ={};
-		mapData.forEach(function(d){
-			lookup[d.id] = d;
-		});
-	console.log(lookup)
 
 	//Set input domain for color scale
 	color.domain([
@@ -43,7 +37,7 @@ export function drawmaps (mapData) {
 	]);
 
 	//Load in GeoJSON data
-	d3.json("data/constituencies.json", function(json) {
+	d3.json("data/authorities.json", function(json) {
 	//Merge the constituency data and GeoJSON into a single array
 	//Loop through once for each Living wage data value
 	for (var i = 0; i < mapData.length; i++) {
@@ -60,6 +54,7 @@ export function drawmaps (mapData) {
 		
 			//We'll check the official ISO country code
 			var jsonConstituencyName = json.features[j].properties.name;
+			//console.log(jsonConstituencyName)
 
 			if (dataConstituencyName == jsonConstituencyName) {
 		
@@ -78,7 +73,7 @@ export function drawmaps (mapData) {
 		   .enter()
 		   .append("path")
 		   .attr("d", path)
-		   .attr("fill",colourLookup);
+		   .attr("fill",function (d) { return color(d.properties.value)});
 
 	   // svg.append("g")
     //             .attr("class", "legendLinear")

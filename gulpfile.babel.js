@@ -82,10 +82,10 @@ function getBundlers(useWatchify) {
         // re-run the bundler then reload the browser
         bundler.execute().on('end', reload);
 
-        // also report any linting errors in the changed file(s)
-        gulp.src(files.filter(file => subdir(path.resolve('client'), file))) // skip bower/npm modules
-          .pipe($.eslint())
-          .pipe($.eslint.format());
+        // // also report any linting errors in the changed file(s)
+        // gulp.src(files.filter(file => subdir(path.resolve('client'), file))) // skip bower/npm modules
+        //   .pipe($.eslint())
+        //   .pipe($.eslint.format());
       });
     }
 
@@ -197,11 +197,11 @@ gulp.task('styles', () => gulp.src('client/**/*.scss')
 );
 
 // lints JS files
-gulp.task('eslint', () => gulp.src('client/scripts/**/*.js')
-  .pipe($.eslint())
-  .pipe($.eslint.format())
-  .pipe($.if(env === 'production', $.eslint.failAfterError()))
-);
+// gulp.task('eslint', () => gulp.src('client/scripts/**/*.js')
+//   .pipe($.eslint())
+//   .pipe($.eslint.format())
+//   .pipe($.if(env === 'production', $.eslint.failAfterError()))
+// );
 
 /**
  * Disabling Sass linting for now, until a non-Ruby way is possible.
@@ -216,7 +216,7 @@ gulp.task('eslint', () => gulp.src('client/scripts/**/*.js')
 gulp.task('watch', done => {
   runSequence('clean', ['scripts', 'styles'], () => {
     gulp.watch('./client/**/*.scss', ['styles'/*, 'scsslint'*/]);
-    gulp.watch('./client/**/*.{js,hbs}', ['scripts', 'eslint']);
+    gulp.watch('./client/**/*.{js,hbs}', ['scripts'/*, 'eslint'*/]);
     done();
   });
 });
@@ -226,7 +226,7 @@ gulp.task('build', done => {
   env = 'production';
 
   runSequence(
-    ['clean', /*'scsslint',*/ 'eslint'],
+    ['clean', /*'scsslint',*/ /*'eslint'*/],
     ['scripts', 'styles', 'copy'],
     ['html', 'images'],
   done);
