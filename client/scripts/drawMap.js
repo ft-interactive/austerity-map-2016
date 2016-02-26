@@ -1,7 +1,8 @@
 import d3 from 'd3';
 
 //code based on Caroline Nevitt’s d3.module 4 exercise
-export function drawmaps (mapData) {
+export function drawmaps (mapData,colDomain) {
+	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
 	.html("")
 	var margin = {top: 10, right: 10, bottom: 10, left: 18};
@@ -10,9 +11,9 @@ export function drawmaps (mapData) {
 
 	//Define map projection
 	var projection = d3.geo.mercator()
-						   .center([ -3, 55.5])
+						   .center([ -3, 54.6])
 						   .translate([ width/2, height/2 ])
-						   .scale([ width/0.25 ]);
+						   .scale([ width/0.28 ]);
 
 	//Define path generator
 	var path = d3.geo.path()
@@ -20,7 +21,7 @@ export function drawmaps (mapData) {
 
 	//colour range will eventually be loaded from bertha as will vary for each information range loaded
 	var color = d3.scale.threshold()
-    .domain([0.02, 0.05, 0.08, 0.20, 0.30])
+    .domain(colDomain)
     .range(["#83cee4", "#76acb8", "#efd3d9", "#efb1af", "#c78b96", "#b0516c"]);
 
 
@@ -69,6 +70,7 @@ export function drawmaps (mapData) {
 		   .append("path")
 		   .attr("d", path)
 		   .attr("fill",function (d) { return color(d.properties.value)});
+
 
 	   // svg.append("g")
     //             .attr("class", "legendLinear")
