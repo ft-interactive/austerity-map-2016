@@ -11,9 +11,9 @@ export function drawmaps (mapData,colDomain) {
 
 	//Define map projection
 	var projection = d3.geo.mercator()
-						   .center([ -3, 54.6])
+						   .center([ -3, 55.7])
 						   .translate([ width/2, height/2 ])
-						   .scale([ width/0.28 ]);
+						   .scale([ width/0.27 ]);
 
 	//Define path generator
 	var path = d3.geo.path()
