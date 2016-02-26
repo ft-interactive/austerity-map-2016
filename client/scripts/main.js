@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		var lookup = e.options[e.selectedIndex].value;
 		var value=ddlist[lookup].trigger;
 		var colRange=ddlist[lookup].colrange;
-		console.log(value,colRange)
 		//create a dataset to draw the map with
 		var mapData=[]
 		for (var i = 0; i < dataset.length; i++) {
