@@ -102,19 +102,22 @@ export function drawmaps (mapData,colDomain) {
 	function regional(d){
 		console.log(d.properties.name);
 		var coords = d3.select("#"+d.properties.name).node().getBoundingClientRect();
-		console.log(coords);
+		console.log("coords ",coords);
 
-		var ops = projection.scale()/width;
-				var opth = projection.translate()[0];
-				var optv = projection.translate()[1];
-				console.log(ops,opth,optv);
 
-		//Define map projection
+
+		// var ops = projection.scale()/width;
+		// 		var opth = projection.translate()[0];
+		// 		var optv = projection.translate()[1];
+		// 		console.log(ops,opth,optv);
+
+		//Define second map projection
+		console.log("width etc",(width/2), (height/2) )
 		var newProjection = d3.geo.mercator()
-			// .center(projection.invert([(coords.left+coords.right)/2,(coords.top+coords.bottom)/2]))
-			.center([ -3, 54.6])
-			.scale(width*40)
-			.translate([ width/2, height/2 ])
+			.center(projection.invert([(coords.left+coords.right)/4,(coords.top+coords.bottom)/4]))
+			//.center([ -3, 54.6])
+			.scale(width*30)
+			.translate([ width/4, height/4 ])
 			.rotate([0, 0]);
 		//Define path generator
 		var newPath = d3.geo.path()
@@ -131,9 +134,13 @@ export function drawmaps (mapData,colDomain) {
 		   .enter()
 		   .append("path")
 		   .attr("d", newPath)
+		   .attr("id", function (d) { return "new"+d.properties.name})
 		   .attr("fill","#ccc2c2")
 		   .style("stroke","#fff1e0")
-		   .style("stroke-width","1px");;
+		   .style("stroke-width","1px");
+
+		var highlight=d3.select("#new"+d.properties.name)
+			.attr("fill","#bb6d82")
 
 
 	};

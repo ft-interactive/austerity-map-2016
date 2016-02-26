@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function list(val,el,col) {
 		return `
-		<option value=${val} colour=${col}>${el}</option>
+		<option value=${val}>${el}</option>
 	`;
 	}
 

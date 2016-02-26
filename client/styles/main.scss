@@ -48,7 +48,7 @@ h1 {
 .intro {
   font: 16px/1.20 FinancierText;
   display: block;
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   color: #333;
 }
@@ -60,7 +60,7 @@ p {
 .presentation {
   display: block;
   margin: 0 auto;
-  width: 80%;
+  width: 85%;
   font-family: MetricWeb;
   font-weight: 400;
   font-size: 18px;
@@ -69,7 +69,7 @@ p {
 
 .left{
   margin-top: 10px;
-  height: 500px;
+  height: 370px;
   float: left;
   display: block;
 }
@@ -118,6 +118,7 @@ p {
 
   .left{
     margin-top: 30px;
+    height: 500px;
   }
 
   .right{
