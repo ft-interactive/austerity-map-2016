@@ -6,8 +6,7 @@ export function drawmaps (mapData) {
 	.html("")
 	var margin = {top: 10, right: 10, bottom: 10, left: 18};
 	var width = (document.getElementById('mapHolder').getBoundingClientRect().width)-margin.left - margin.right;
-    var heightRatio=1.5;
-	var height=width*heightRatio;
+	var height=width*1.5;
 
 	//Define map projection
 	var projection = d3.geo.mercator()
@@ -19,10 +18,12 @@ export function drawmaps (mapData) {
 	var path = d3.geo.path()
 					 .projection(projection);
 
-	//Colors by Cynthia Brewer (colorbrewer2.org), To be amended
-	var color = d3.scale.quantize()
-	 	.domain([ 0, 100 ])
-		.range([ "#83cee4", "#76acb8", "#d76f6c", "#efb1af", "#b0516c",]);
+	//colour range will eventually be loaded from bertha as will vary for each information range loaded
+	var color = d3.scale.threshold()
+    .domain([0.02, 0.05, 0.08, 0.20, 0.30])
+    .range(["#83cee4", "#76acb8", "#efd3d9", "#efb1af", "#c78b96", "#b0516c"]);
+
+
 
 	//Create SVG
 	var svg = d3.select("#mapHolder")
@@ -30,14 +31,8 @@ export function drawmaps (mapData) {
 		.attr("width", width)
 		.attr("height", height);
 
-	//Set input domain for color scale
-	color.domain([
-		d3.min(mapData, function(d) { return +d.value; }), 
-		d3.max(mapData, function(d) { return +d.value; })
-	]);
-
 	//Load in GeoJSON data
-	d3.json("data/authorities.json", function(json) {
+	d3.json("data/authorities2.json", function(json) {
 	//Merge the constituency data and GeoJSON into a single array
 	//Loop through once for each Living wage data value
 	for (var i = 0; i < mapData.length; i++) {
