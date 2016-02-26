@@ -114,7 +114,7 @@ export function drawmaps (mapData,colDomain) {
 		//Define second map projection
 		console.log("width etc",(width/2), (height/2) )
 		var newProjection = d3.geo.mercator()
-			.center(projection.invert([(coords.left+coords.right)/4,(coords.top+coords.bottom)/4]))
+			.center(projection.invert([(coords.left+coords.right)/2,(coords.top+coords.bottom)/4]))
 			//.center([ -3, 54.6])
 			.scale(width*30)
 			.translate([ width/4, height/4 ])
@@ -141,6 +141,14 @@ export function drawmaps (mapData,colDomain) {
 
 		var highlight=d3.select("#new"+d.properties.name)
 			.attr("fill","#bb6d82")
+
+		var coords = highlight.node().getBoundingClientRect();
+		console.log("coords ",coords);
+
+		regionalsvg
+			.style('left', (coords.left+coords.right)+'px')
+			.style('top', 100+'px');
+
 
 
 	};
