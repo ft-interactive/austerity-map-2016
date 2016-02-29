@@ -7,7 +7,9 @@ export function drawmaps (mapData,colDomain) {
 	.html("")
 	var margin = {top: 10, right: 10, bottom: 10, left: 18};
 	var width = (document.getElementById('mapHolder').getBoundingClientRect().width)-margin.left - margin.right;
-	var height=width*1.3;
+	var height=(width*1.3);
+	console.log(height)
+	document.getElementById('national').style.height=height+45+"px";
 
 	//Define map projection
 	var projection = d3.geo.mercator()
@@ -112,8 +114,8 @@ export function drawmaps (mapData,colDomain) {
 		//Define second map projection
 		console.log("width etc",(width/2), (height/2) )
 		var newProjection = d3.geo.mercator()
-			.center(projection.invert([(coords.left+coords.right)/2,(coords.top+coords.bottom)/4]))
-			//.center([ -3, 54.6])
+			//.center(projection.invert([(coords.left+coords.right)/2,(coords.top+coords.bottom)/4]))
+			.center([ -3, 54.6])
 			.scale(width*30)
 			.translate([ width/4, height/4 ])
 			.rotate([0, 0]);
@@ -135,13 +137,12 @@ export function drawmaps (mapData,colDomain) {
 		   .attr("id", function (d) { return "new"+d.properties.name})
 		   .attr("fill","#ccc2c2")
 		   .style("stroke","#fff1e0")
-		   .style("stroke-width","1px");
-
-		d3.select("#nameholder").html(d.properties.LAD13NM)
-
+		   .style("stroke-width","1px")
 
 		var highlight=d3.select("#new"+d.properties.name)
 			.attr("fill","#bb6d82");
+
+		d3.select("#nameholder").html(d.properties.LAD13NM)
 
 
 	};
