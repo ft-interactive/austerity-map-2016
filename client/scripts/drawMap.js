@@ -24,8 +24,6 @@ export function drawmaps (mapData,colDomain) {
     .domain(colDomain)
     .range(["#83cee4", "#76acb8", "#efd3d9", "#efb1af", "#c78b96", "#b0516c"]);
 
-
-
 	//Create SVG
 	var svg = d3.select("#mapHolder")
 		.append("svg")
@@ -35,7 +33,7 @@ export function drawmaps (mapData,colDomain) {
 	//Load in GeoJSON data
 	d3.json("data/authorities2.json", function(json) {
 	//Merge the constituency data and GeoJSON into a single array
-	//Loop through once for each Living wage data value
+	//Loop through once for each value
 	for (var i = 0; i < mapData.length; i++) {
 
 		//Grab ConstituencyID
@@ -139,16 +137,11 @@ export function drawmaps (mapData,colDomain) {
 		   .style("stroke","#fff1e0")
 		   .style("stroke-width","1px");
 
+		d3.select("#nameholder").html(d.properties.LAD13NM)
+
+
 		var highlight=d3.select("#new"+d.properties.name)
-			.attr("fill","#bb6d82")
-
-		var coords = highlight.node().getBoundingClientRect();
-		console.log("coords ",coords);
-
-		regionalsvg
-			.style('left', (coords.left+coords.right)+'px')
-			.style('top', 100+'px');
-
+			.attr("fill","#bb6d82");
 
 
 	};

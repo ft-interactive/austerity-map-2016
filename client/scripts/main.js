@@ -36,12 +36,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		drawmaps(mapData,colRange);
 	});
 
-
+	//Add event listener to drop down menu
+	var divSelect = document.getElementById('pcode');
+	divSelect.addEventListener("keyup",postcode);
 
 	function list(val,el,col) {
 		return `
 		<option value=${val}>${el}</option>
 	`;
+	}
+
+	function postcode() {
+		var input=this.value
+		if(input.length>=6) {
+			console.log (this.value)
+		}
 	}
 
 });
