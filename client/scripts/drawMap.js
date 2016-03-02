@@ -5,8 +5,8 @@ export function drawmaps (mapData,colDomain) {
 	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
 	.html("")
-	var margin = {top: 10, right: 10, bottom: 10, left: 18};
-	var width = (document.getElementById('mapHolder').getBoundingClientRect().width)-margin.left - margin.right;
+	var margin = {top: 10, right: 0, bottom: 10, left: 18};
+	var width = (document.getElementById('regional').getBoundingClientRect().width)-margin.left - margin.right;
 	var height=(width*1.3);
 	console.log(height)
 	document.getElementById('national').style.height=height+45+"px";
