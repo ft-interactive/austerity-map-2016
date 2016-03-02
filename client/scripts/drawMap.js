@@ -33,7 +33,7 @@ export function drawmaps (mapData,colDomain) {
 		.attr("height", height);
 
 	//Load in GeoJSON data
-	d3.json("data/authorities2.json", function(json) {
+	d3.json("data/authorities3.json", function(json) {
 	//Merge the constituency data and GeoJSON into a single array
 	//Loop through once for each value
 	for (var i = 0; i < mapData.length; i++) {
@@ -98,7 +98,7 @@ export function drawmaps (mapData,colDomain) {
 	};
 
 	function regional(d){
-		console.log(d.properties.name);
+		console.log(d);
 		var coords = d3.select("#"+d.properties.name).node().getBoundingClientRect();
 		console.log("coords ",coords);
 
@@ -112,8 +112,8 @@ export function drawmaps (mapData,colDomain) {
 		//Define second map projection
 		console.log("width etc",(width/2), (height/2) )
 		var newProjection = d3.geo.mercator()
-			//.center(projection.invert([(coords.left+coords.right)/2,(coords.top+coords.bottom)/4]))
-			.center([ -3, 54.6])
+			.center([d.properties.centroids_XCOORD,d.properties.centroids_YCOORD])
+			//.center([ -3, 54.6])
 			.scale(width*30)
 			.translate([ width/4, height/4 ])
 			.rotate([0, 0]);
