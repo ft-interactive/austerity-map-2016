@@ -29,16 +29,31 @@ document.addEventListener('DOMContentLoaded', () => {
 		var value=ddlist[lookup].trigger;
 		var colRange=ddlist[lookup].colrange;
 		//create a dataset to draw the map with
-		var mapData=[]
-		for (var i = 0; i < dataset.length; i++) {
-			mapData.push({id:dataset[i].id,value:dataset[i][value]});
-		};
+		var mapData=buildData(value)
 		drawmaps(mapData,colRange);
 	});
 
 	//Add event listener to drop down menu
 	var divSelect = document.getElementById('pcode');
 	divSelect.addEventListener("keyup",postcode);
+
+	setup();
+
+	function setup () {
+		var lookup = 0;
+		var value=ddlist[0].trigger;
+		var colRange=ddlist[lookup].colrange;
+		var mapData=buildData(value)
+		drawmaps(mapData,colRange);
+	}
+
+	function buildData (value) {
+		var mapData=[]
+		for (var i = 0; i < dataset.length; i++) {
+			mapData.push({id:dataset[i].id,value:dataset[i][value]});
+		};
+		return mapData
+	}
 
 	function list(val,el,col) {
 		return `

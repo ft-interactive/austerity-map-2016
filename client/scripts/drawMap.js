@@ -13,7 +13,7 @@ export function drawmaps (mapData,colDomain) {
 
 	//Define map projection
 	var projection = d3.geo.mercator()
-						   .center([ -3, 55.7])
+						   .center([ -3, 55.4])
 						   .translate([ width/2, height/2 ])
 						   .scale([ width/0.27 ]);
 
