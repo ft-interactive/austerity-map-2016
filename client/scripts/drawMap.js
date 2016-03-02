@@ -8,7 +8,6 @@ export function drawmaps (mapData,colDomain) {
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
 	var width = (document.getElementById('regional').getBoundingClientRect().width)-margin.left - margin.right;
 	var height=(width*1.3);
-	console.log(height)
 	document.getElementById('national').style.height=height+45+"px";
 
 	//Define map projection
@@ -98,22 +97,10 @@ export function drawmaps (mapData,colDomain) {
 	};
 
 	function regional(d){
-		console.log(d);
-		var coords = d3.select("#"+d.properties.name).node().getBoundingClientRect();
-		console.log("coords ",coords);
-
-
-
-		// var ops = projection.scale()/width;
-		// 		var opth = projection.translate()[0];
-		// 		var optv = projection.translate()[1];
-		// 		console.log(ops,opth,optv);
 
 		//Define second map projection
-		console.log("width etc",(width/2), (height/2) )
 		var newProjection = d3.geo.mercator()
 			.center([d.properties.centroids_XCOORD-0.5,d.properties.centroids_YCOORD+0.5])
-			//.center([ -3, 54.6])
 			.scale(width*30)
 			.translate([ width/4, height/4 ])
 			.rotate([0, 0]);

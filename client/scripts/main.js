@@ -34,11 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	//Add event listener to drop down menu
-	var divSelect = document.getElementById('pcode');
-	divSelect.addEventListener("keyup",postcode);
+	// var divSelect = document.getElementById('pcode');
+	// divSelect.addEventListener("keyup",postcode);
 
 	setup();
+	html=text1();
+	div=d3.select("#dynam1")
+	.html(html)
 
+	
 	//Draws the default map of overall impact
 	function setup () {
 		var lookup = 0;
@@ -66,7 +70,22 @@ document.addEventListener('DOMContentLoaded', () => {
 		var input=this.value
 		if(input.length>=6) {
 			console.log (this.value)
+			input = input.replace(/\s/g, "");
+
+			d3.json('https://api.postcodes.io/postcodes/SE19HL',function(error,data){
+				console.log(data.result.codes.admin_district)
+			})
+
+			
 		}
+
+	}
+
+	function text1() {
+		return `
+			<div class="dynamic">${"Some dynamic text will go in here"}</div>
+			<div class="dynamic">${" and a bit more in here"}</div>	
+			`;
 	}
 
 });

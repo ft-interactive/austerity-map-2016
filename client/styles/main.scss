@@ -100,14 +100,24 @@ select { border: 1.5px solid #CCC }
   font-weight: 400;
 }
 
-.input {
+.o-forms-text {
   margin-top: 5px;
+  margin-right: 10px; 
   height: 20px;  
 
 }
 
 .rightmap{
   margin-top: 5px;
+}
+
+.dynamic {
+  margin-top: 8px;
+  max-width: 666px;
+  font: 16px/1.20 FinancierText;
+  display: block;
+  margin: 0 auto;
+  color: #333;
 }
 
 //Responsive
@@ -157,6 +167,13 @@ select { border: 1.5px solid #CCC }
     display: block;
     margin: 0 auto;
     margin-top: 30px;
+  }
+
+  .dynamic {
+    display: inline;
+    margin-top: 8px;
+    max-width: 666px;
+    font: 21px/1.20 FinancierText;
   }
  
 }
