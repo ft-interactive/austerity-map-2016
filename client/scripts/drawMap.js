@@ -112,7 +112,7 @@ export function drawmaps (mapData,colDomain) {
 		//Define second map projection
 		console.log("width etc",(width/2), (height/2) )
 		var newProjection = d3.geo.mercator()
-			.center([d.properties.centroids_XCOORD,d.properties.centroids_YCOORD])
+			.center([d.properties.centroids_XCOORD-0.5,d.properties.centroids_YCOORD+0.5])
 			//.center([ -3, 54.6])
 			.scale(width*30)
 			.translate([ width/4, height/4 ])
