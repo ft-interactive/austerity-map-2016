@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	setup();
 
+	//Draws the default map of overall impact
 	function setup () {
 		var lookup = 0;
 		var value=ddlist[0].trigger;

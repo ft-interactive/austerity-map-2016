@@ -47,15 +47,13 @@ export function drawmaps (mapData,colDomain) {
 
 		//Find the corresponding ConstituencyID inside the GeoJSON
 		for (var j = 0; j < json.features.length; j++) {
-		
 			//We'll check the official ISO country code
 			var jsonConstituencyName = json.features[j].properties.name;
 			//console.log(jsonConstituencyName)
-
 			if (dataConstituencyName == jsonConstituencyName) {
-		
-				//Copy the data value into the GeoJSON
+				//Copy the data values into the GeoJSON
 				json.features[j].properties.value = dataValue;
+				json.features[j].properties.color = "toCome";
 				
 				//Stop looking through the JSON
 				break;
@@ -143,8 +141,6 @@ export function drawmaps (mapData,colDomain) {
 			.attr("fill","#bb6d82");
 
 		d3.select("#nameholder").html(d.properties.LAD13NM)
-
-
 	};
 
 });
