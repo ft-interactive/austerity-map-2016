@@ -26,7 +26,7 @@
     <!-- endbuild -->
     <!-- endsmoosh -->
 
-    <link rel="stylesheet" href="https://h2.ft.com/build/v2/bundles/css?modules=o-footer@^4,o-fonts@^2,o-grid@^4">
+    <link rel="stylesheet" href="https://h2.ft.com/build/v2/bundles/css?modules=n-normalize@^1,o-footer@^4,o-fonts@^2,o-grid@^4,o-forms@^2">
 
     <!-- smoosh -->
     <!-- build:css styles/top.css -->
@@ -111,21 +111,24 @@
           <div class="presentation">
             <div class="o-grid-row">
               <div data-o-grid-colspan="10 S10 M6 L6 center" id="national" class="left">
+
                 <div class="o-forms-group">
                   <label class="o-forms-label">Select box<br></label>
                   <select id="ddmenu" class="o-forms-select"></select>
                 </div>
                 <div id="mapHolder" class="leftmap"></div>
+
               </div>
               <div data-o-grid-colspan="10 S10 M6 L6 center" id="regional" class="right">
               
-                <div class="o-forms-group">
+                <form class="o-forms-group" id="search_postcode">
                   <label class="o-forms-label">Enter your postcode<br></label>
+                  <small id="postcode_error" class="o-forms-additional-info"></small>
                   <div class="o-forms-affix-wrapper">
-                    <input type="text" placeholder="placeholder" class="o-forms-text"></input>
-                    <span class="o-forms-suffix">Go</span>
+                    <input type="text" id="code_input" name="postcode" placeholder="Postcode" class="o-forms-text"></input>
+                    <span class="o-forms-suffix"><button type="submit">Go</button></span>
                   </div>
-                </div>
+                </form>
 
                 <div id="nameholder" class="regionName"></div>
                 <div id="regionHolder" class="rightmap"></div>

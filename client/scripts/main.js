@@ -4,6 +4,32 @@ import attachFastClick from 'fastclick';
 
 import {drawmaps} from './drawMap';
 
+document.getElementById('search_postcode').onsubmit = function(event) {
+ event.preventDefault();
+ const value = event.target.elements.postcode.value;
+ const is_valid = validate_postcode(value)
+ console.log(value);
+ if (!is_valid) {
+ 	// tewll the user somehow
+ 	show_postcode_error(value);
+ } else {
+ 	// do stuff
+ }
+
+};
+
+function validate_postcode() {
+	return false;
+}
+
+function show_local_result() {
+
+}
+
+function show_postcode_error() {
+	document.getElementById('postcode_error').innerHTML = 'Invalid postcode'
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	// make hover effects work on touch devices
 	oHoverable.init();

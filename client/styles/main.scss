@@ -1,6 +1,4 @@
-$o-grid-is-silent: false;
 
-@import 'n-normalize/main';
 @import 'o-colors/main';
 @import 'o-grid/main';
 
@@ -102,9 +100,7 @@ select { border: 1.5px solid #CCC }
 
 .o-forms-text {
   margin-top: 5px;
-  margin-right: 10px; 
   height: 20px;  
-
 }
 
 .rightmap{
