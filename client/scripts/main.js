@@ -5,25 +5,27 @@ import attachFastClick from 'fastclick';
 import {drawmaps} from './drawMap';
 
 document.getElementById('search_postcode').onsubmit = function(event) {
- event.preventDefault();
- const value = event.target.elements.postcode.value;
- const is_valid = validate_postcode(value)
- console.log(value);
- if (!is_valid) {
- 	// tewll the user somehow
- 	show_postcode_error(value);
- } else {
- 	// do stuff
- }
-
+	event.preventDefault();
+	var postcode = event.target.elements.postcode.value;
+	postcode = postcode.replace(/\s/g, "");
+	validate_postcode(postcode);
 };
 
-function validate_postcode() {
-	return false;
-}
-
-function show_local_result() {
-
+function validate_postcode(postcode) {
+	var parcel="https://api.postcodes.io/postcodes/"+String(postcode);
+	var authCode;
+	    d3.json(parcel,function(error,data){
+	    	if(error) {
+	    		console.log("error",error);
+	    		show_postcode_error()
+	    	}
+			else {
+				authCode=data.result.codes.admin_district;
+				document.getElementById('postcode_error').innerHTML = ''
+				console.log("Returned code=", authCode)
+				//regional(authCode)
+			}
+		})
 }
 
 function show_postcode_error() {
@@ -65,9 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	setup();
 	html=text1();
-	div=d3.select("#dynam1")
-	.html(html)
-
+	document.getElementById('dynam1').innerHTML = html
 	
 	//Draws the default map of overall impact
 	function setup () {
@@ -90,21 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		return `
 		<option value=${val}>${el}</option>
 	`;
-	}
-
-	function postcode() {
-		var input=this.value
-		if(input.length>=6) {
-			console.log (this.value)
-			input = input.replace(/\s/g, "");
-
-			d3.json('https://api.postcodes.io/postcodes/SE19HL',function(error,data){
-				console.log(data.result.codes.admin_district)
-			})
-
-			
-		}
-
 	}
 
 	function text1() {

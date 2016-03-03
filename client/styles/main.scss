@@ -98,9 +98,12 @@ select { border: 1.5px solid #CCC }
   font-weight: 400;
 }
 
-.o-forms-text {
-  margin-top: 5px;
-  height: 20px;  
+.o-forms-group {
+  padding-left: 0px;
+}
+
+.o-forms-affix-wrapper {
+  margin-top: 11px;
 }
 
 .rightmap{
@@ -113,7 +116,7 @@ select { border: 1.5px solid #CCC }
   font: 16px/1.20 FinancierText;
   display: block;
   margin: 0 auto;
-  color: #333;
+  color: #76acb8;
 }
 
 //Responsive

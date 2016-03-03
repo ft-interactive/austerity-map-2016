@@ -2,6 +2,8 @@ import d3 from 'd3';
 
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
+	//this is in the draw maps function because it calls the region function
+
 	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
 	.html("")
@@ -70,32 +72,6 @@ export function drawmaps (mapData,colDomain) {
 	   .attr("fill",function (d) { return color(d.properties.value)})
 	   .on("click", regional);
 
-
-	// svg.append("g")
-    //             .attr("class", "legendLinear")
-    //             .attr("transform", "translate(30, 50)");
-            
-    //     var legendLinear = d3.legend.color()
-    //         .shapeWidth(20)
-    //         .shapeHeight(20)
-    //         .labels(["0-10", "10-20", "20-30", "30-40", "40-50"])
-    //         .labelAlign("start")
-    //         .orient("vertical")
-    //         .title("Percentage of employee jobs below living wage")
-    //         .ascending(false)
-    //         .scale(color);
-        
-    //     svg.select(".legendLinear")
-    //         .call(legendLinear);
-
-	function colourLookup(d){
-		console.log(d.id)
-		var value = lookup[d.id].value
-		if(value == 'x') return '#fff1e0';
-		return color(value);
-
-	};
-
 	function regional(d){
 
 		//Define second map projection
@@ -128,11 +104,9 @@ export function drawmaps (mapData,colDomain) {
 			.attr("fill","#bb6d82");
 
 		d3.select("#nameholder").html(d.properties.LAD13NM)
+
 	};
 
 });
-
-
-
 
 }
