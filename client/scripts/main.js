@@ -2,7 +2,7 @@ import d3 from 'd3';
 import oHoverable from 'o-hoverable';
 import attachFastClick from 'fastclick';
 
-import {drawmaps} from './drawMap';
+import {drawmaps,change_centre} from './drawMap';
 
 document.getElementById('search_postcode').onsubmit = function(event) {
 	event.preventDefault();
@@ -23,7 +23,7 @@ function validate_postcode(postcode) {
 				authCode=data.result.codes.admin_district;
 				document.getElementById('postcode_error').innerHTML = ''
 				console.log("Returned code=", authCode)
-				//regional(authCode)
+				change_centre(authCode)
 			}
 		})
 }

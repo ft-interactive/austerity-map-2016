@@ -2,8 +2,7 @@ import d3 from 'd3';
 
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
-	//this is in the draw maps function because it calls the region function
-
+	var firstRun=true
 	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
 	.html("")
@@ -35,78 +34,86 @@ export function drawmaps (mapData,colDomain) {
 
 	//Load in GeoJSON data
 	d3.json("data/authorities3.json", function(json) {
-	//Merge the constituency data and GeoJSON into a single array
-	//Loop through once for each value
-	for (var i = 0; i < mapData.length; i++) {
+		//Merge the constituency data and GeoJSON into a single array
+		//Loop through once for each value
+		for (var i = 0; i < mapData.length; i++) {
+			//Grab ConstituencyID
+			var dataConstituencyName = mapData[i].id;	
+			//Grab data value, and convert from string to float
+			var dataValue = +mapData[i].value;
+			//console.log(dataConstituencyName,dataValue)
 
-		//Grab ConstituencyID
-		var dataConstituencyName = mapData[i].id;
-		
-		//Grab data value, and convert from string to float
-		var dataValue = +mapData[i].value;
-		//console.log(dataConstituencyName,dataValue)
-
-		//Find the corresponding ConstituencyID inside the GeoJSON
-		for (var j = 0; j < json.features.length; j++) {
-			//We'll check the official ISO country code
-			var jsonConstituencyName = json.features[j].properties.name;
-			//console.log(jsonConstituencyName)
-			if (dataConstituencyName == jsonConstituencyName) {
-				//Copy the data values into the GeoJSON
-				json.features[j].properties.value = dataValue;
-				json.features[j].properties.color = "toCome";
-				
-				//Stop looking through the JSON
-				break;
+			//Find the corresponding ConstituencyID inside the GeoJSON
+			for (var j = 0; j < json.features.length; j++) {
+				//We'll check the official ISO country code
+				var jsonConstituencyName = json.features[j].properties.name;
+				//console.log(jsonConstituencyName)
+				if (dataConstituencyName == jsonConstituencyName) {
+					//Copy the data values into the GeoJSON
+					json.features[j].properties.value = dataValue;
+					json.features[j].properties.color = "toCome";
+					
+					//Stop looking through the JSON
+					break;
 				}
 			}
-	}	
-	
-	//Bind data and create one path per GeoJSON feature
-	svg.selectAll("path")
-	   .data(json.features)
-	   .enter()
-	   .append("path")
-	   .attr("d", path)
-	   .attr("id", function (d) { return d.properties.name})
-	   .attr("fill",function (d) { return color(d.properties.value)})
-	   .on("click", regional);
-
-	function regional(d){
-
-		//Define second map projection
-		var newProjection = d3.geo.mercator()
-			.center([d.properties.centroids_XCOORD-0.5,d.properties.centroids_YCOORD+0.5])
-			.scale(width*30)
-			.translate([ width/4, height/4 ])
-			.rotate([0, 0]);
-		//Define path generator
-		var newPath = d3.geo.path()
-					 .projection(newProjection);
-
-		var regionalsvg = d3.select("#regionHolder")
-			.html("")
-			.append("svg")
-			.attr("width", width)
-			.attr("height", height);
-
-		regionalsvg.selectAll("path")
+		}	
+		
+		//Bind data and create one path per GeoJSON feature
+		svg.selectAll("path")
 		   .data(json.features)
 		   .enter()
 		   .append("path")
-		   .attr("d", newPath)
-		   .attr("id", function (d) { return "new"+d.properties.name})
-		   .attr("fill","#ccc2c2")
-		   .style("stroke","#fff1e0")
-		   .style("stroke-width","1px")
+		   .attr("d", path)
+		   .attr("id", function (d) { return d.properties.name})
+		   .attr("fill",function (d) { return color(d.properties.value)})
+		   .on("click", regional);
 
-		var highlight=d3.select("#new"+d.properties.name)
-			.attr("fill","#bb6d82");
+		if (firstRun) {
+			//trigger the event listener and pass blackburn
+		}
 
-		d3.select("#nameholder").html(d.properties.LAD13NM)
+		function regional(d){
 
-	};
+			//Define second map projection
+			var newProjection = d3.geo.mercator()
+				.center([d.properties.centroids_XCOORD-0.5,d.properties.centroids_YCOORD+0.3])
+				.scale(width*30)
+				.translate([ width/4, height/4 ])
+				.rotate([0, 0]);
+			//Define path generator
+			var newPath = d3.geo.path()
+						 .projection(newProjection);
 
-});
+			var regionalsvg = d3.select("#regionHolder")
+				.html("")
+				.append("svg")
+				.attr("width", width)
+				.attr("height", height-57);
+
+			regionalsvg.selectAll("path")
+			   .data(json.features)
+			   .enter()
+			   .append("path")
+			   .attr("d", newPath)
+			   .attr("id", function (d) { return "new"+d.properties.name})
+			   .attr("fill","#ccc2c2")
+			   .style("stroke","#fff1e0")
+			   .style("stroke-width","1px")
+
+			var highlight=d3.select("#new"+d.properties.name)
+				.attr("fill","#bb6d82");
+
+			d3.select("#nameholder").html(d.properties.LAD13NM)
+		};
+	});
+}
+
+export function change_centre(d) {
+	var el=d3.select("#"+d)
+	console.log(el[0][0].__data__.properties)
+	var name=el[0][0].__data__.properties.LAD13NM
+	d3.select("#nameholder").html(name)
+
 
 }

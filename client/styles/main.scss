@@ -48,6 +48,7 @@ h1 {
   font: 16px/1.20 FinancierText;
   display: block;
   margin: 0 auto;
+  margin-top: 10px;
   color: #333;
 }
 
@@ -78,6 +79,10 @@ p {
 
 select { border: 1.5px solid #CCC }
 
+.o-forms-group{
+  margin-bottom:0px;
+}
+
 .o-forms-select{
   margin-top: 5px;
 }
@@ -87,9 +92,9 @@ select { border: 1.5px solid #CCC }
 }
 
 .right{
-  margin-top: 10px;
   display: block;
   margin: 0 auto;
+  margin-top: 15px;
 }
 
 .regionName{
@@ -114,7 +119,7 @@ select { border: 1.5px solid #CCC }
   margin-top: 8px;
   max-width: 666px;
   font: 16px/1.20 FinancierText;
-  display: block;
+  display: inline;
   margin: 0 auto;
   color: #76acb8;
 }
