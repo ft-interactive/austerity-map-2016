@@ -3,7 +3,6 @@ import d3 from 'd3';
 var mapJSON = {};
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
-	var firstRun=true
 	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
 	.html("")
@@ -73,15 +72,12 @@ export function drawmaps (mapData,colDomain) {
 		   .on("click", function(d){
 		   		drawRegionalMap(d);
 		   	});
-
-		if (firstRun) {
-			//trigger the event listener and pass blackburn
-		}		
+	
 	});
 }
 
 export function drawRegionalMap(d){
-	console.log(d)
+	console.log("Regional",d)
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
 	var width = (document.getElementById('regional').getBoundingClientRect().width)-margin.left - margin.right;
 	var height=(width*1.3)-5;
@@ -118,12 +114,9 @@ export function drawRegionalMap(d){
 	};
 
 export function change_centre(d) {
-	var el=d3.select("#"+d)
-	console.log(el)
+	var el=d3.select("#"+d);
 	var name=el[0][0].__data__.properties.LAD13NM
 	var data=el[0][0].__data__
 	d3.select("#nameholder").html(name)
 	drawRegionalMap(data)
-
-
 }
