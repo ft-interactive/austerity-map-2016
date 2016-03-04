@@ -117,7 +117,6 @@ export function drawRegionalMap(d){
 		d3.select("#nameholder").html(d.properties.LAD13NM)
 	};
 
-
 export function change_centre(d) {
 	var el=d3.select("#"+d)
 	console.log(el)

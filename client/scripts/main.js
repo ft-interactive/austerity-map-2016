@@ -76,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		var colRange=ddlist[lookup].colrange;
 		var mapData=buildData(value)
 		drawmaps(mapData,colRange);
+		// var authCode=[E06000008]
+		// change_centre(authCode)
 	}
 
 	function buildData (value) {

@@ -59,6 +59,7 @@ p {
 .presentation {
   display: block;
   margin: 0 auto;
+  margin-top: 10px;
   max-width: 666px;
   font-family: MetricWeb;
   font-weight: 400;
@@ -81,10 +82,22 @@ select { border: 1.5px solid #CCC }
 
 .o-forms-group{
   margin-bottom:0px;
+  padding-left: 0px;
 }
 
 .o-forms-select{
   margin-top: 5px;
+}
+
+.o-forms-affix-wrapper {
+  margin-top: 11px;
+}
+
+.o-forms-label {
+  font-family: MetricWeb;
+  font-weight: 400;
+  color: #6b6e68;
+  font-size: 20px;
 }
 
 .leftmap {
@@ -103,14 +116,6 @@ select { border: 1.5px solid #CCC }
   font-weight: 400;
 }
 
-.o-forms-group {
-  padding-left: 0px;
-}
-
-.o-forms-affix-wrapper {
-  margin-top: 11px;
-}
-
 .rightmap{
   margin-top: 5px;
 }
@@ -122,6 +127,27 @@ select { border: 1.5px solid #CCC }
   display: inline;
   margin: 0 auto;
   color: #76acb8;
+}
+
+//Case study styles
+.studymain{
+  margin-top: 10px;
+  background-color: #ccc2c2;
+}
+.studyname{
+  display: block;
+  margin: 0 auto;
+  font: 22px/1.20 FinancierText;
+  font-weight: 500;
+}
+.studypic{
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  margin-top: 5px;
+}
+.studybody {
+  margin-top: 5px;
 }
 
 //Responsive
@@ -146,7 +172,7 @@ select { border: 1.5px solid #CCC }
   }
 
   .intro {
-    font: 21px/1.3 FinancierText;
+    font: 19px/1.3 FinancierText;
     max-width: 666px;
   }
 
@@ -155,29 +181,51 @@ select { border: 1.5px solid #CCC }
   }
 
   .presentation {
+    font-family: MetricWeb;
+    font-weight: 400;
+    font-size: 21 px;
     display: block;
     margin: 0 auto;
-    font-size: 20px;
+    margin-top: 10px;
   }
 
   .left{
     display: block;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 5px;
     height: 500px;
+  }
+  .o-forms-group{
+    margin-bottom:0px;
+    padding-left: 0px;
+  }
+
+  .o-forms-select{
+    margin-top: 5px;
+  }
+
+  .o-forms-affix-wrapper {
+    margin-top: 11px;
+  }
+
+  .o-forms-label {
+    font-family: MetricWeb;
+    font-weight: 400;
+    color: #6b6e68;
+    font-size: 20px;
   }
 
   .right{
     display: block;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 5px;
   }
 
   .dynamic {
     display: inline;
     margin-top: 8px;
     max-width: 666px;
-    font: 21px/1.20 FinancierText;
+    font: 19px/1.20 FinancierText;
   }
  
 }
