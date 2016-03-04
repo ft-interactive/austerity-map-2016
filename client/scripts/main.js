@@ -4,34 +4,6 @@ import attachFastClick from 'fastclick';
 
 import {drawmaps, drawRegionalMap, change_centre} from './drawMap';
 
-document.getElementById('search_postcode').onsubmit = function(event) {
-	event.preventDefault();
-	var postcode = event.target.elements.postcode.value;
-	postcode = postcode.replace(/\s/g, "");
-	validate_postcode(postcode);
-};
-
-function validate_postcode(postcode) {
-	var parcel="https://api.postcodes.io/postcodes/"+String(postcode);
-	var authCode;
-	    d3.json(parcel,function(error,data){
-	    	if(error) {
-	    		console.log("error",error);
-	    		show_postcode_error()
-	    	}
-			else {
-				authCode=data.result.codes.admin_district;
-				document.getElementById('postcode_error').innerHTML = ''
-				console.log("Returned code=", authCode)
-				change_centre(authCode)
-			}
-		})
-}
-
-function show_postcode_error() {
-	document.getElementById('postcode_error').innerHTML = 'Invalid postcode'
-}
-
 document.addEventListener('DOMContentLoaded', () => {
 	// make hover effects work on touch devices
 	oHoverable.init();
@@ -48,7 +20,36 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	var div=d3.select("#ddmenu")
 	.html(html)
-	
+
+	document.getElementById('search_postcode').onsubmit = function(event) {
+		event.preventDefault();
+		var postcode = event.target.elements.postcode.value;
+		postcode = postcode.replace(/\s/g, "");
+		validate_postcode(postcode);
+	};
+
+	function validate_postcode(postcode) {
+		var parcel="https://api.postcodes.io/postcodes/"+String(postcode);
+		var authCode;
+		    d3.json(parcel,function(error,data){
+		    	if(error) {
+		    		console.log("error",error);
+		    		show_postcode_error()
+		    	}
+				else {
+					authCode=data.result.codes.admin_district;
+					document.getElementById('postcode_error').innerHTML = ''
+					console.log("Returned code=", authCode)
+					change_centre(authCode)
+				}
+			})
+	}
+
+	function show_postcode_error() {
+		document.getElementById('postcode_error').innerHTML = 'Invalid postcode'
+	}
+
+	 
 	//Add event listener to drop down menu
 	var event=d3.select("#ddmenu");
 	event.on("change", function(d){

@@ -29,6 +29,7 @@ export function drawmaps (mapData,colDomain) {
 	//Create SVG
 	var svg = d3.select("#mapHolder")
 		.append("svg")
+		.attr("id", "GB")
 		.attr("width", width)
 		.attr("height", height);
 
@@ -78,6 +79,13 @@ export function drawmaps (mapData,colDomain) {
 
 export function drawRegionalMap(d){
 	console.log("Regional",d)
+	//This function bring the selection to the front
+	d3.selection.prototype.moveToFront = function() { 
+	  return this.each(function() { 
+	    this.parentNode.appendChild(this); 
+	  }); 
+	}; 
+
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
 	var width = (document.getElementById('regional').getBoundingClientRect().width)-margin.left - margin.right;
 	var height=(width*1.3)-5;
@@ -108,9 +116,19 @@ export function drawRegionalMap(d){
 		   .style("stroke-width","1px")
 
 		var highlight=d3.select("#new"+d.properties.name)
-			.attr("fill","#bb6d82");
+			.attr("fill","#bb6d82")
+			.style("stroke","#000000")
+			.style("stroke-width","2px");
+		
+		highlight.moveToFront();
+		var svg = d3.select("#GB");
+		var districts = svg.selectAll("path")
+			.style("stroke","#fff1e0")
+			.style("stroke-width","0px");
 
-		d3.select("#nameholder").html(d.properties.LAD13NM)
+		highlight=d3.select("#"+d.properties.name)
+			.style("stroke","#000000")
+			.style("stroke-width","2px");
 	};
 
 export function change_centre(d) {
