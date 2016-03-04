@@ -73,9 +73,15 @@ export function drawmaps (mapData,colDomain) {
 		   .on("click", function(d){
 		   		drawRegionalMap(d,colDomain);
 		   	});
-	
 	});
+
 }
+	// var DefaultAuth="E06000008"
+	// drawRegionalMap(DefaultAuth,colDomain);
+	// var el=d3.select("#"+d);
+	// 	var data=el[0][0].__data__
+	// 	drawRegionalMap(data,colRange)
+	// }
 
 export function drawRegionalMap(d, colDomain){
 	console.log("Regional",d)

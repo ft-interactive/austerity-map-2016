@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		document.getElementById('postcode_error').innerHTML = 'Invalid postcode'
 	}
 
-	 
 	//Add event listener to drop down menu
 	var event=d3.select("#ddmenu");
 	event.on("change", function(d){
