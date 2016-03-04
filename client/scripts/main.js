@@ -44,8 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				else {
 					authCode=data.result.codes.admin_district;
 					document.getElementById('postcode_error').innerHTML = ''
-					console.log("Returned code=", authCode)
-					change_centre(authCode)
+					console.log("Returned code=", authCode);
+					var e = document.getElementById("ddmenu");
+					var lookup = e.options[e.selectedIndex].value;
+					var colRange=ddlist[lookup].colrange;
+					change_centre(authCode, colRange)
 				}
 			})
 	}
@@ -60,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	event.on("change", function(d){
 		var e = document.getElementById("ddmenu");
 		var lookup = e.options[e.selectedIndex].value;
+		var colRange=ddlist[lookup].colrange;
 		var value=ddlist[lookup].trigger;
 		var colRange=ddlist[lookup].colrange;
 		//create a dataset to draw the map with
