@@ -61,11 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		drawmaps(mapData,colRange);
 	});
 
-	//Add event listener to drop down menu
-	// var divSelect = document.getElementById('pcode');
-	// divSelect.addEventListener("keyup",postcode);
-
+	//Displays the map
 	setup();
+	//Adds dynamic text to the fourth case study
 	html=text1();
 	document.getElementById('dynam1').innerHTML = html
 	
@@ -96,8 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function text1() {
 		return `
-			<div class="dynamic">${"Some dynamic text will go in here"}</div>
-			<div class="dynamic">${" and a bit more in here"}</div>	
+			<div class="studyname">${"Dynamic to come"}</div>
+			<div class="studypic"><img class="studypic" src="https://image.webservices.ft.com/v1/images/raw/ftcms:003dcddc-dfa1-11e5-b072-006d8d362ba3?source=ig&width=167" alt="Syria’s ‘mafia-style’ gas deals with jihadis"></div>
+			<div class="studybody">${"Yourself off its pleasant ecstatic now law. Ye their mirth seems of songs. Prospect out bed contempt separate. Her inquietude our shy yet sentiments collecting. Cottage fat beloved himself arrived old. Grave widow hours among him ﻿no you led. Power had these met least nor young"}</div>
 			`;
 	}
 
