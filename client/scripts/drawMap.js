@@ -88,8 +88,10 @@ export function drawRegionalMap(d, colDomain){
 	//Fills in dynamic text
 	var div=d3.select("#dynamicName")
 		.html(d.properties.LAD13NM);
+	div=d3.select("#nameholder")
+		.html(d.properties.LAD13NM);
 	div=d3.select("#dynamicBody")
-		.html(d.properties.story)
+		.html(d.properties.story);
 
 
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
@@ -145,8 +147,6 @@ export function drawRegionalMap(d, colDomain){
 export function change_centre(d,colRange) {
 	colRange = colRange.split(',');
 	var el=d3.select("#"+d);
-	var name=el[0][0].__data__.properties.LAD13NM
 	var data=el[0][0].__data__
-	d3.select("#nameholder").html(name)
 	drawRegionalMap(data,colRange)
 }
