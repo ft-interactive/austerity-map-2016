@@ -2,7 +2,7 @@ import d3 from 'd3';
 import oHoverable from 'o-hoverable';
 import attachFastClick from 'fastclick';
 
-import {drawmaps,change_centre} from './drawMap';
+import {drawmaps, drawRegionalMap, change_centre} from './drawMap';
 
 document.getElementById('search_postcode').onsubmit = function(event) {
 	event.preventDefault();

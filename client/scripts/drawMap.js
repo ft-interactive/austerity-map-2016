@@ -1,5 +1,6 @@
 import d3 from 'd3';
 
+var mapJSON = {};
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
 	var firstRun=true
@@ -7,7 +8,7 @@ export function drawmaps (mapData,colDomain) {
 	var svg = d3.select("#mapHolder")
 	.html("")
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
-	var width = (document.getElementById('regional').getBoundingClientRect().width)-margin.left - margin.right;
+	var width = (document.getElementById('national').getBoundingClientRect().width)-margin.left - margin.right;
 	var height=(width*1.3);
 	document.getElementById('national').style.height=height+45+"px";
 
@@ -36,6 +37,8 @@ export function drawmaps (mapData,colDomain) {
 	d3.json("data/authorities3.json", function(json) {
 		//Merge the constituency data and GeoJSON into a single array
 		//Loop through once for each value
+		mapJSON = json;
+
 		for (var i = 0; i < mapData.length; i++) {
 			//Grab ConstituencyID
 			var dataConstituencyName = mapData[i].id;	
@@ -67,53 +70,61 @@ export function drawmaps (mapData,colDomain) {
 		   .attr("d", path)
 		   .attr("id", function (d) { return d.properties.name})
 		   .attr("fill",function (d) { return color(d.properties.value)})
-		   .on("click", regional);
+		   .on("click", function(d){
+		   		drawRegionalMap(d);
+		   	});
 
 		if (firstRun) {
 			//trigger the event listener and pass blackburn
-		}
-
-		function regional(d){
-
-			//Define second map projection
-			var newProjection = d3.geo.mercator()
-				.center([d.properties.centroids_XCOORD-0.5,d.properties.centroids_YCOORD+0.3])
-				.scale(width*30)
-				.translate([ width/4, height/4 ])
-				.rotate([0, 0]);
-			//Define path generator
-			var newPath = d3.geo.path()
-						 .projection(newProjection);
-
-			var regionalsvg = d3.select("#regionHolder")
-				.html("")
-				.append("svg")
-				.attr("width", width)
-				.attr("height", height-57);
-
-			regionalsvg.selectAll("path")
-			   .data(json.features)
-			   .enter()
-			   .append("path")
-			   .attr("d", newPath)
-			   .attr("id", function (d) { return "new"+d.properties.name})
-			   .attr("fill","#ccc2c2")
-			   .style("stroke","#fff1e0")
-			   .style("stroke-width","1px")
-
-			var highlight=d3.select("#new"+d.properties.name)
-				.attr("fill","#bb6d82");
-
-			d3.select("#nameholder").html(d.properties.LAD13NM)
-		};
+		}		
 	});
 }
 
+export function drawRegionalMap(d){
+	console.log(d)
+	var margin = {top: 10, right: 0, bottom: 10, left: 18};
+	var width = (document.getElementById('regional').getBoundingClientRect().width)-margin.left - margin.right;
+	var height=(width*1.3)-5;
+		//Define second map projection
+		var newProjection = d3.geo.mercator()
+			.center([d.properties.centroids_XCOORD-0.5,d.properties.centroids_YCOORD+0.3])
+			.scale(width*30)
+			.translate([ width/4, height/4 ])
+			.rotate([0, 0]);
+		//Define path generator
+		var newPath = d3.geo.path()
+					 .projection(newProjection);
+
+		var regionalsvg = d3.select("#regionHolder")
+			.html("")
+			.append("svg")
+			.attr("width", width)
+			.attr("height", height-57);
+
+		regionalsvg.selectAll("path")
+		   .data(mapJSON.features)
+		   .enter()
+		   .append("path")
+		   .attr("d", newPath)
+		   .attr("id", function (d) { return "new"+d.properties.name})
+		   .attr("fill","#ccc2c2")
+		   .style("stroke","#fff1e0")
+		   .style("stroke-width","1px")
+
+		var highlight=d3.select("#new"+d.properties.name)
+			.attr("fill","#bb6d82");
+
+		d3.select("#nameholder").html(d.properties.LAD13NM)
+	};
+
+
 export function change_centre(d) {
 	var el=d3.select("#"+d)
-	console.log(el[0][0].__data__.properties)
+	console.log(el)
 	var name=el[0][0].__data__.properties.LAD13NM
+	var data=el[0][0].__data__
 	d3.select("#nameholder").html(name)
+	drawRegionalMap(data)
 
 
 }
