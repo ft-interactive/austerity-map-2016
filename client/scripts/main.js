@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	var ddlist = spreadsheet.ddlist;
 	var dataset = spreadsheet.authorities;
+	var credits = spreadsheet.credits;
+
+
+	console.log(credits)
+	//d3.select("#credits").html("<b>By </b>"+credits.credit);
 	//build the drop dow menu from items in ddlist
 	var html=""
 		for (var i = 0; i < ddlist.length; i++) {
@@ -82,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	function buildData (value) {
 		var mapData=[]
 		for (var i = 0; i < dataset.length; i++) {
-			mapData.push({id:dataset[i].id,value:dataset[i][value]});
+			mapData.push({id:dataset[i].id,story:dataset[i].story,value:dataset[i][value]});
 		};
 		return mapData
 	}
@@ -95,9 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function text1() {
 		return `
-			<div class="studyname">${"Study to come"}</div>
+			<div id="dynamicName" class="studyname">${"Study to come"}</div>
 			<div class="studypic"><img class="studypic" src="https://image.webservices.ft.com/v1/images/raw/ftcms:003dcddc-dfa1-11e5-b072-006d8d362ba3?source=ig&width=167" alt="Syria’s ‘mafia-style’ gas deals with jihadis"></div>
-			<div class="studybody">${"Tesxt generated from within the script and handled by a variable"}</div>
+			<div id="dynamicBody" class="studybody">${"Tesxt generated from within the script and handled by a variable"}</div>
 			`;
 	}
 

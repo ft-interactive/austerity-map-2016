@@ -3,6 +3,7 @@ import d3 from 'd3';
 var mapJSON = {};
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
+	console.log("mapData",mapData)
 	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
 	.html("")
@@ -44,7 +45,8 @@ export function drawmaps (mapData,colDomain) {
 			var dataConstituencyName = mapData[i].id;	
 			//Grab data value, and convert from string to float
 			var dataValue = +mapData[i].value;
-			//console.log(dataConstituencyName,dataValue)
+			var story = mapData[i].story;
+			console.log(story)
 
 			//Find the corresponding ConstituencyID inside the GeoJSON
 			for (var j = 0; j < json.features.length; j++) {
@@ -54,7 +56,7 @@ export function drawmaps (mapData,colDomain) {
 				if (dataConstituencyName == jsonConstituencyName) {
 					//Copy the data values into the GeoJSON
 					json.features[j].properties.value = dataValue;
-					json.features[j].properties.color = "toCome";
+					json.features[j].properties.story = story;
 					
 					//Stop looking through the JSON
 					break;
@@ -84,7 +86,13 @@ export function drawRegionalMap(d){
 	  return this.each(function() { 
 	    this.parentNode.appendChild(this); 
 	  }); 
-	}; 
+	};
+	//Fills in dynamic text
+	var div=d3.select("#dynamicName")
+		.html(d.properties.LAD13NM);
+	div=d3.select("#dynamicBody")
+		.html(d.properties.story)
+
 
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
 	var width = (document.getElementById('regional').getBoundingClientRect().width)-margin.left - margin.right;
