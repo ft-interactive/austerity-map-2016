@@ -130,6 +130,13 @@ select { border: 1.5px solid #CCC }
 }
 
 //Case study styles
+.studyholder {
+    padding-right: 10px;
+    margin-top: 10px;
+    background-color: #f6e9d8;
+    border-top: 1px solid #cec6b9;
+  }
+
 .studymain{
   display: block;
   margin: 0 auto;
@@ -302,6 +309,12 @@ $linked-in-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3
     margin-top: 8px;
     max-width: 666px;
     font: 19px/1.20 FinancierText;
+  }
+
+  .studyholder {
+    border-top: 1px solid #cec6b9;
+    margin-top: 10px;
+    background-color: #f6e9d8;; 
   }
 
   .studymain{
