@@ -3,8 +3,8 @@ import d3 from 'd3';
 var mapJSON = {};
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
-	console.log(colDomain)
 	colDomain = colDomain.split(',');
+	//console.log(colDomain)
 	var svg = d3.select("#mapHolder")
 	.html("")
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
@@ -25,7 +25,7 @@ export function drawmaps (mapData,colDomain) {
 	//colour range will eventually be loaded from bertha as will vary for each information range loaded
 	var color = d3.scale.threshold()
     .domain(colDomain)
-    .range([ "#d19e93", "#d36d6c", "#e9a7a7", "#b46c80"]);
+    .range([ "#83cde3", "#d36d6c", "#e9a7a7", "#b46c80"]);
 
 	//Create SVG
 	var svg = d3.select("#mapHolder")
@@ -88,18 +88,8 @@ export function drawmaps (mapData,colDomain) {
 	  .attr('transform', function(d, i) {
 	    var legheight = legendRectSize + legendSpacing;
 	    var xOffset = 0-height+(color.domain().length*legendRectSize/0.6);
-	    if (i<3) {
-	      var horz = 10;
-	      var vert=10+i*(legendRectSize+(10));
-	    }
-	    if ((i>2)){
-	      var horz = (i-3)*(legendRectSize+(width/3.4));
-	      var vert=32;
-	    }
-	    if ((i>5)){
-	      var horz = i*(legendRectSize+(width/3.4))-i*(legendRectSize+(width/3.4));
-	      var vert=44;
-	    }
+	    var horz = 10;
+	    var vert=10+i*(legendRectSize+(10));
 	    return 'translate(' + horz + ',' + vert + ')';
 	  });
 
@@ -160,7 +150,7 @@ export function drawRegionalMap(d, colDomain){
 	
 	var color = d3.scale.threshold()
     .domain(colDomain)
-    .range([ "#d19e93", "#d36d6c", "#e9a7a7", "#b46c80"]);
+    .range([ "#83cde3", "#d36d6c", "#e9a7a7", "#b46c80"]);
 
 	//Define path generator
 	var newPath = d3.geo.path()

@@ -13,12 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	var ddlist = spreadsheet.ddlist;
 	var dataset = spreadsheet.data;
-	console.log(dataset);
+	//console.log("dataset ",dataset);
 	var credits = spreadsheet.credits;
 
 
 	//console.log(credits)
 	//d3.select("#credits").html("<b>By </b>"+credits.credit);
+
 	//build the drop dow menu from items in ddlist
 	var html=""
 		for (var i = 0; i < ddlist.length; i++) {
