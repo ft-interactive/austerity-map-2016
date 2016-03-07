@@ -46,6 +46,7 @@ export function drawmaps (mapData,colDomain) {
 			//Grab data value, and convert from string to float
 			var dataValue = +mapData[i].value;
 			var summary = mapData[i].summary;
+			var authName = mapData[i].authname;
 
 			//Find the corresponding ConstituencyID inside the GeoJSON
 			for (var j = 0; j < json.features.length; j++) {
@@ -55,6 +56,7 @@ export function drawmaps (mapData,colDomain) {
 				if (dataConstituencyName == jsonConstituencyName) {
 					//Copy the data values into the GeoJSON
 					json.features[j].properties.value = dataValue;
+					json.features[j].properties.authName = authName;
 					json.features[j].properties.summary = summary;
 					
 					//Stop looking through the JSON
@@ -78,29 +80,22 @@ export function drawmaps (mapData,colDomain) {
 	drawLegend(svg,height,width)
 
 	function drawLegend(legendsvg,height,width){
-	var legendSpacing = 3;
-	var legendRectSize = 10;
-	var legend = legendsvg.selectAll('.legend')
-	  .data(color.domain())
-	  .enter()
-	  .append('g')
-	  .attr('class', 'legend')
-	  .attr('transform', function(d, i) {
-	    var legheight = legendRectSize + legendSpacing;
-	    var xOffset = 0-height+(color.domain().length*legendRectSize/0.6);
-	    var horz = 10;
-	    var vert=10+i*(legendRectSize+(10));
-	    return 'translate(' + horz + ',' + vert + ')';
-	  });
+		var legend = d3.select("#GB").append('g')
+			.attr("width",100)
+			.attr("height",200)
 
-	  legend.append('rect')
-	    .attr('width', legendRectSize)
-	    .attr('height', legendRectSize)
-	    .style("fill", function(d) { return (color(d))})
-	  legend.append('text')
-	    .attr('x', legendRectSize + legendSpacing)
-	    .attr('y', legendRectSize - legendSpacing+3)
-	    .text(function(d) { return "<= "+d; });
+		var rw=15;
+		var rh=10;
+		for (var i = 0; i < 4; i++) {
+			legend.append("rect")
+				.attr("fill", "color.range[i]")
+				.attr("width" , rw)
+				.attr("height" , rh)
+				.attr("x",20)
+				.attr("y",(i*15)+200);
+
+		}
+
 	}
 
 }
@@ -121,9 +116,9 @@ export function drawRegionalMap(d, colDomain){
 	};
 	//Fills in dynamic text
 	var div=d3.select("#dynamicName")
-		.html(d.properties.LAD13NM);
+		.html(d.properties.authName);
 	div=d3.select("#nameholder")
-		.html(d.properties.LAD13NM);
+		.html(d.properties.authName);
 	var html=summaryText(d.properties.summary)
 	div=d3.select("#dynamicBody")
 		.html(html);

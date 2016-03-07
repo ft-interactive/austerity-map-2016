@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log(trigger)
 		var mapData=[]
 		for (var i = 0; i < dataset.length; i++) {
-			mapData.push({id:dataset[i].authority.code,summary:dataset[i].authority.summary,value:dataset[i].authority[trigger].pa});
+			mapData.push({id:dataset[i].authority.code,authname:dataset[i].authority.name,summary:dataset[i].authority.summary,value:dataset[i].authority[trigger].pa});
 
 		};
 		//value:dataset[i].authority[value].pa
