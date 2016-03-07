@@ -1,6 +1,7 @@
 import d3 from 'd3';
 
 var mapJSON = {};
+var colours= ([ "#83cde3","#e9a7a7", "#d36d6c", "#b46c80"]);
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
 	colDomain = colDomain.split(',');
@@ -25,7 +26,7 @@ export function drawmaps (mapData,colDomain) {
 	//colour range will eventually be loaded from bertha as will vary for each information range loaded
 	var color = d3.scale.threshold()
     .domain(colDomain)
-    .range([ "#83cde3", "#d36d6c", "#e9a7a7", "#b46c80"]);
+    .range(colours);
 
 	//Create SVG
 	var svg = d3.select("#mapHolder")
@@ -73,26 +74,42 @@ export function drawmaps (mapData,colDomain) {
 		   .attr("d", path)
 		   .attr("id", function (d) { return d.properties.name})
 		   .attr("fill",function (d) { return color(d.properties.value)})
+		   .style("stroke","#fff1e0")
+	  	 .style("stroke-width","0.2px")	
 		   .on("click", function(d){
 		   		drawRegionalMap(d,colDomain);
 		   	});
 	});
-	drawLegend(svg,height,width)
+	drawLegend(colDomain)
 
-	function drawLegend(legendsvg,height,width){
+	function drawLegend(colDomain){
+		console.log("domain",colDomain)
+		console.log(colDomain[0])
 		var legend = d3.select("#GB").append('g')
+			.attr("class", "presentation")
 			.attr("width",100)
-			.attr("height",200)
-
+			.attr("height",200);
 		var rw=15;
-		var rh=10;
+		var rh=12;
 		for (var i = 0; i < 4; i++) {
 			legend.append("rect")
-				.attr("fill", "color.range[i]")
+				.attr("fill", function(){return colours[i]})
 				.attr("width" , rw)
 				.attr("height" , rh)
-				.attr("x",20)
-				.attr("y",(i*15)+200);
+				.attr("x",5)
+				.attr("y",(i*18)+10);
+			legend.append('text')
+				.attr("class", "presentation")
+				.attr("x",27)
+				.attr("y",(i*18)+21)
+				.html(function() { 
+					if (i<3){
+						return "less than "+ colDomain[i]
+					}
+					else {
+						return "more than " + colDomain[i-1]
+					}
+				});
 
 		}
 
@@ -145,7 +162,7 @@ export function drawRegionalMap(d, colDomain){
 	
 	var color = d3.scale.threshold()
     .domain(colDomain)
-    .range([ "#83cde3", "#d36d6c", "#e9a7a7", "#b46c80"]);
+    .range(colours);
 
 	//Define path generator
 	var newPath = d3.geo.path()
