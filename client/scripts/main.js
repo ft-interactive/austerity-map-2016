@@ -12,11 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	attachFastClick(document.body);
 
 	var ddlist = spreadsheet.ddlist;
-	var dataset = spreadsheet.authorities;
+	var dataset = spreadsheet.data;
+	console.log(dataset);
 	var credits = spreadsheet.credits;
 
 
-	console.log(credits)
+	//console.log(credits)
 	//d3.select("#credits").html("<b>By </b>"+credits.credit);
 	//build the drop dow menu from items in ddlist
 	var html=""
@@ -87,11 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		drawmaps(mapData,colRange);
 	}
 
-	function buildData (value) {
+	function buildData (trigger) {
+		console.log(trigger)
 		var mapData=[]
 		for (var i = 0; i < dataset.length; i++) {
-			mapData.push({id:dataset[i].id,story:dataset[i].story,value:dataset[i][value]});
+			mapData.push({id:dataset[i].authority.code,summary:dataset[i].authority.summary,value:dataset[i].authority[trigger].pa});
+
 		};
+		//value:dataset[i].authority[value].pa
+		console.log(mapData) 
 		return mapData
 	}
 

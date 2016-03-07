@@ -3,6 +3,7 @@ import d3 from 'd3';
 var mapJSON = {};
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
+	console.log(colDomain)
 	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
 	.html("")
@@ -24,7 +25,7 @@ export function drawmaps (mapData,colDomain) {
 	//colour range will eventually be loaded from bertha as will vary for each information range loaded
 	var color = d3.scale.threshold()
     .domain(colDomain)
-    .range(["#83cee4", "#76acb8", "#efd3d9", "#efb1af", "#c78b96", "#b0516c"]);
+    .range([ "#d19e93", "#d36d6c", "#e9a7a7", "#b46c80"]);
 
 	//Create SVG
 	var svg = d3.select("#mapHolder")
@@ -44,7 +45,7 @@ export function drawmaps (mapData,colDomain) {
 			var dataConstituencyName = mapData[i].id;	
 			//Grab data value, and convert from string to float
 			var dataValue = +mapData[i].value;
-			var story = mapData[i].story;
+			var summary = mapData[i].summary;
 
 			//Find the corresponding ConstituencyID inside the GeoJSON
 			for (var j = 0; j < json.features.length; j++) {
@@ -54,7 +55,7 @@ export function drawmaps (mapData,colDomain) {
 				if (dataConstituencyName == jsonConstituencyName) {
 					//Copy the data values into the GeoJSON
 					json.features[j].properties.value = dataValue;
-					json.features[j].properties.story = story;
+					json.features[j].properties.summary = summary;
 					
 					//Stop looking through the JSON
 					break;
@@ -74,6 +75,43 @@ export function drawmaps (mapData,colDomain) {
 		   		drawRegionalMap(d,colDomain);
 		   	});
 	});
+	drawLegend(svg,height,width)
+
+	function drawLegend(legendsvg,height,width){
+	var legendSpacing = 3;
+	var legendRectSize = 10;
+	var legend = legendsvg.selectAll('.legend')
+	  .data(color.domain())
+	  .enter()
+	  .append('g')
+	  .attr('class', 'legend')
+	  .attr('transform', function(d, i) {
+	    var legheight = legendRectSize + legendSpacing;
+	    var xOffset = 0-height+(color.domain().length*legendRectSize/0.6);
+	    if (i<3) {
+	      var horz = 10;
+	      var vert=10+i*(legendRectSize+(10));
+	    }
+	    if ((i>2)){
+	      var horz = (i-3)*(legendRectSize+(width/3.4));
+	      var vert=32;
+	    }
+	    if ((i>5)){
+	      var horz = i*(legendRectSize+(width/3.4))-i*(legendRectSize+(width/3.4));
+	      var vert=44;
+	    }
+	    return 'translate(' + horz + ',' + vert + ')';
+	  });
+
+	  legend.append('rect')
+	    .attr('width', legendRectSize)
+	    .attr('height', legendRectSize)
+	    .style("fill", function(d) { return (color(d))})
+	  legend.append('text')
+	    .attr('x', legendRectSize + legendSpacing)
+	    .attr('y', legendRectSize - legendSpacing+3)
+	    .text(function(d) { return "<= "+d; });
+	}
 
 }
 	// var DefaultAuth="E06000008"
@@ -96,8 +134,18 @@ export function drawRegionalMap(d, colDomain){
 		.html(d.properties.LAD13NM);
 	div=d3.select("#nameholder")
 		.html(d.properties.LAD13NM);
+	var html=summaryText(d.properties.summary)
 	div=d3.select("#dynamicBody")
-		.html(d.properties.story);
+		.html(html);
+
+	function summaryText (summary){
+		console.log(summary)
+		return `
+			<div id=class="studybody">${"Total "+summary.total}</div>
+			<div id=class="studybody">${"PA 2010-20 "+summary.pa20102020}</div>
+			<div id=class="studybody">${"PA 2016-21 "+summary.pa20162021}</div>
+			`;
+	}
 
 
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
@@ -112,7 +160,7 @@ export function drawRegionalMap(d, colDomain){
 	
 	var color = d3.scale.threshold()
     .domain(colDomain)
-    .range(["#83cee4", "#76acb8", "#efd3d9", "#efb1af", "#c78b96", "#b0516c"]);
+    .range([ "#d19e93", "#d36d6c", "#e9a7a7", "#b46c80"]);
 
 	//Define path generator
 	var newPath = d3.geo.path()
@@ -148,6 +196,8 @@ export function drawRegionalMap(d, colDomain){
 	highlight=d3.select("#"+d.properties.name)
 		.style("stroke","#000000")
 		.style("stroke-width","2px");
+
+
 	};
 
 export function change_centre(d,colRange) {
