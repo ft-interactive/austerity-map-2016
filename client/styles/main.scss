@@ -63,8 +63,9 @@ p {
   max-width: 666px;
   font-family: MetricWeb;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 20px;
   color: #6b6e68;
+  fill: #6b6e68;
 }
 .data-o-grid-colspan{
   margin-left: 0px;
@@ -104,9 +105,10 @@ select { border: 1.5px solid #CCC }
   margin-top: 10px;
 }
 .legend {
-  font-family: MetricWeb;
-  font-weight: 400;
-  font-size: 18px;
+   font-family: MetricWeb;
+  font-weight: 300;
+  font-size: 14px;
+  fill: #6b6e68;
 }
 
 .right{
@@ -278,7 +280,7 @@ $linked-in-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3
   .presentation {
     font-family: MetricWeb;
     font-weight: 400;
-    font-size: 21 px;
+    font-size: 22 px;
     display: block;
     margin: 0 auto;
     margin-top: 10px;

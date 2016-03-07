@@ -1,7 +1,7 @@
 import d3 from 'd3';
 
 var mapJSON = {};
-var colours= ([ "#83cde3","#e9a7a7", "#d36d6c", "#b46c80"]);
+var colours= ([ "#f4d4c1","#efb1af", "#e3726b", "#a64d67"]);
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
 	colDomain = colDomain.split(',');
@@ -86,7 +86,6 @@ export function drawmaps (mapData,colDomain) {
 		console.log("domain",colDomain)
 		console.log(colDomain[0])
 		var legend = d3.select("#GB").append('g')
-			.attr("class", "presentation")
 			.attr("width",100)
 			.attr("height",200);
 		var rw=15;
@@ -99,7 +98,7 @@ export function drawmaps (mapData,colDomain) {
 				.attr("x",5)
 				.attr("y",(i*18)+10);
 			legend.append('text')
-				.attr("class", "presentation")
+				.attr("class", "legend")
 				.attr("x",27)
 				.attr("y",(i*18)+21)
 				.html(function() { 
