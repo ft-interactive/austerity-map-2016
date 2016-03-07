@@ -4,7 +4,7 @@ var mapJSON = {};
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
 	colDomain = colDomain.split(',');
-	//console.log(colDomain)
+	console.log(colDomain)
 	var svg = d3.select("#mapHolder")
 	.html("")
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
