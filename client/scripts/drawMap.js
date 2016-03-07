@@ -2,10 +2,10 @@ import d3 from 'd3';
 
 var mapJSON = {};
 var colours= ([ "#f4d4c1","#efb1af", "#e3726b", "#a64d67"]);
+var firstRun=true
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain) {
 	colDomain = colDomain.split(',');
-	console.log(colDomain)
 	var svg = d3.select("#mapHolder")
 	.html("")
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
@@ -83,8 +83,6 @@ export function drawmaps (mapData,colDomain) {
 	drawLegend(colDomain)
 
 	function drawLegend(colDomain){
-		console.log("domain",colDomain)
-		console.log(colDomain[0])
 		var legend = d3.select("#GB").append('g')
 			.attr("width",100)
 			.attr("height",200);
@@ -103,16 +101,32 @@ export function drawmaps (mapData,colDomain) {
 				.attr("y",(i*18)+21)
 				.html(function() { 
 					if (i<3){
-						return "less than "+ colDomain[i]
+						return "less than £"+ colDomain[i]
 					}
 					else {
-						return "more than " + colDomain[i-1]
+						return "more than £" + colDomain[i-1]
 					}
 				});
+		}
+	}
 
+	if (firstRun) {
+		console.log(firstRun)
+		firstRun=false
+
+		 d3.selection.prototype.trigger = function( event ) {
+		    var e = document.createEvent('Event');
+		    e.initEvent( event, true, true);
+		    this.each( function( d ) {
+		        this.dispatchEvent( e );    
+		    });    
+		   return this;
 		}
 
+		// var test = d3.select ("#E06000047");
+		// drawRegionalMap(test,colDomain)
 	}
+	console.log(firstRun)
 
 }
 	// var DefaultAuth="E06000008"
@@ -123,7 +137,7 @@ export function drawmaps (mapData,colDomain) {
 	// }
 
 export function drawRegionalMap(d, colDomain){
-	console.log("Regional",d)
+	console.log("Regional",d.properties)
 	//This function bring the selection to the front
 	d3.selection.prototype.moveToFront = function() { 
 	  return this.each(function() { 
@@ -140,12 +154,12 @@ export function drawRegionalMap(d, colDomain){
 		.html(html);
 
 	function summaryText (summary){
-		console.log(summary)
-		return `
-			<div id=class="studybody">${"Total "+summary.total}</div>
-			<div id=class="studybody">${"PA 2010-20 "+summary.pa20102020}</div>
-			<div id=class="studybody">${"PA 2016-21 "+summary.pa20162021}</div>
-			`;
+		//console.log(summary)
+		// return `
+		// 	<div id=class="studybody">${"Total "+summary.total}</div>
+		// 	<div id=class="studybody">${"PA 2010-20 "+summary.pa20102020}</div>
+		// 	<div id=class="studybody">${"PA 2016-21 "+summary.pa20162021}</div>
+		// 	`;
 	}
 
 

@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	//build the drop dow menu from items in ddlist
 	var html=""
 		for (var i = 0; i < ddlist.length; i++) {
-			html=html+list(ddlist[i].lookup,ddlist[i].listitem,ddlist[i].colrange)
+			html=html+list(i,ddlist[i].listitem,ddlist[i].colrange)
 		}
 	var div=d3.select("#ddmenu")
 	.html(html)
@@ -64,9 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	event.on("change", function(d){
 		var e = document.getElementById("ddmenu");
 		var lookup = e.options[e.selectedIndex].value;
+		console.log('lookup', lookup, ddlist);
 		var colRange=ddlist[lookup].colrange;
+		console.log("colRange",colRange)
 		var value=ddlist[lookup].trigger;
-		var colRange=ddlist[lookup].colrange;
 		//create a dataset to draw the map with
 		var mapData=buildData(value)
 		drawmaps(mapData,colRange);
@@ -97,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		};
 		//value:dataset[i].authority[value].pa
-		console.log(mapData) 
+		//console.log(mapData) 
 		return mapData
 	}
 
