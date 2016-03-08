@@ -199,8 +199,8 @@ export function drawRegionalMap(d, colDomain){
     .range(colours);
 
     var natMargin = {top: 10, right: 0, bottom: 10, left: 18};
-	var natWidth = (document.getElementById('regional').getBoundingClientRect().width) - (natMargin.left + natMargin.right);
-	var natHeight=(document.getElementById('regional').getBoundingClientRect().height) - (natMargin.top + natMargin.bottom + document.getElementById('nameholder').getBoundingClientRect().height);
+	var natWidth = (document.getElementById('national').getBoundingClientRect().width) - (natMargin.left + natMargin.right);
+	var natHeight=(document.getElementById('national').getBoundingClientRect().height) - (natMargin.top + natMargin.bottom + document.getElementById('nameholder').getBoundingClientRect().height);
 	// document.getElementById('regional').style.height=natHeight+45+"px";
 
 	//Define map projection
@@ -220,8 +220,6 @@ export function drawRegionalMap(d, colDomain){
       y = (bounds[0][1] + bounds[1][1]) / 2,
       scale = .9 / Math.max(dx / natWidth, dy / (natHeight-57)),
       translate = [natWidth / 2 - scale * x, (natHeight-57) / 2 - scale * y];
-
-  	//console.log(scale,translate);
 
 	//Define path generator
 	// var newPath = d3.geo.path()
