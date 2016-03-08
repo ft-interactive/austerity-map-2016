@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	var dataset = spreadsheet.data;
 	//console.log("dataset ",dataset);
 	var credits = spreadsheet.credits;
+	var firstRun = true
 
 
 	//console.log(credits)
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		var value=ddlist[lookup].trigger;
 		//create a dataset to draw the map with
 		var mapData=buildData(value)
-		drawmaps(mapData,colRange);
+		drawmaps(mapData,colRange,firstRun);
 	});
 
 	//Displays the map
@@ -87,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		var value=ddlist[0].trigger;
 		var colRange=ddlist[lookup].colrange;
 		var mapData=buildData(value)
-		drawmaps(mapData,colRange);
+		drawmaps(mapData,colRange,firstRun);
+		firstRun=false
 	}
 
 	function buildData (trigger) {

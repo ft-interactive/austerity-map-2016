@@ -2,9 +2,14 @@ import d3 from 'd3';
 
 var mapJSON = {};
 var colours= ([ "#f4d4c1","#efb1af", "#e3726b", "#a64d67"]);
-var firstRun=true
+var selected
 //code based on Caroline Nevitt’s d3.module 4 exercise
-export function drawmaps (mapData,colDomain) {
+export function drawmaps (mapData,colDomain, firstRun) {
+	console.log("first",firstRun)
+	if (firstRun==true) {
+		console.log("changing")
+		selected= "E06000008"
+	}
 	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
 	.html("")
@@ -79,7 +84,8 @@ export function drawmaps (mapData,colDomain) {
 		   .on("click", function(d){
 		   		drawRegionalMap(d,colDomain);
 		   	});
-		   setupRegion()
+		   console.log("selected at callback ",selected)
+		   setupRegion(selected)
 	});
 	drawLegend(colDomain)
 
@@ -112,16 +118,10 @@ export function drawmaps (mapData,colDomain) {
 		}
 	}
 
-	function setupRegion() {
-		if (firstRun) {
-			console.log(firstRun)
-			firstRun=false
-			var authCode = "E06000008";
-			var el=d3.select("#"+authCode);
+	function setupRegion(authcode) {
+			var el=d3.select("#"+authcode);
 			var data=el[0][0].__data__
 			drawRegionalMap(data,colDomain)
-		}
-		console.log(firstRun)
 
 	}
 
@@ -134,6 +134,7 @@ export function drawmaps (mapData,colDomain) {
 	// }
 
 export function drawRegionalMap(d, colDomain){
+	selected=d.properties.name
 	console.log("Regional",d.properties)
 	//This function bring the selection to the front
 	d3.selection.prototype.moveToFront = function() { 
@@ -208,14 +209,12 @@ export function drawRegionalMap(d, colDomain){
 	highlight=d3.select("#"+d.properties.name)
 		.style("stroke","#000000")
 		.style("stroke-width","2px");
-
-
 	};
 
 export function change_centre(d,colRange) {
 	colRange = colRange.split(',');
 	var el=d3.select("#"+d);
 	console.log("change_centre selection",el)
-	var data=el[0][0].__data__
+	data=el[0][0].__data__	
 	drawRegionalMap(data,colRange)
 }
