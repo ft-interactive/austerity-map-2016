@@ -104,7 +104,7 @@ select { border: 1.5px solid #CCC }
   margin-top: 10px;
 }
 .legend {
-   font-family: MetricWeb;
+  font-family: MetricWeb;
   font-weight: 300;
   font-size: 14px;
   fill: #6b6e68;
@@ -184,6 +184,13 @@ select { border: 1.5px solid #CCC }
   font: 14px/1.2 FinancierText;
   font-weight: 500;
   color: #6b6e68;
+}
+
+.mapSource{
+  font-family: MetricWeb;
+  font-weight: 300;
+  font-size: 14px;
+  fill: #6b6e68;
 }
 
 //media buttons
