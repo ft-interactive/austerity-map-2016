@@ -47,7 +47,7 @@ h1 {
 
 .intro {
   max-width: 666px;
-  font: 16px/1.20 FinancierText;
+  font: 16px/1.30 FinancierText;
   display: block;
   margin: 0 auto;
   margin-top: 10px;
@@ -55,7 +55,8 @@ h1 {
 }
 
 p a , 
-.studybody a{
+.studybody a,
+.byline a{
   color: #2e6e9e;
   text-decoration: none;
 }
