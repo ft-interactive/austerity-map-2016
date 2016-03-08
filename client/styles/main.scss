@@ -94,9 +94,6 @@ select { border: 1.5px solid #CCC }
   padding-left: 0px;
 }
 
-.o-forms-select{
-  margin-top: 5px;
-}
 
 .o-forms-affix-wrapper {
   margin-top: 11px;
@@ -316,9 +313,6 @@ $linked-in-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3
     padding-left: 0px;
   }
 
-  .o-forms-select{
-    margin-top: 5px;
-  }
 
   .o-forms-affix-wrapper {
     margin-top: 11px;
@@ -334,7 +328,7 @@ $linked-in-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3
   .right{
     display: block;
     margin: 0 auto;
-    margin-top: 5px;
+    margin-top: 1px;
   }
 
   .dynamic {
@@ -383,6 +377,11 @@ $linked-in-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3
     font: 15px/1.2 FinancierText;
     color: #6b6e68;
     margin-top: 8px;
+  }
+
+  .bodydynamic {
+    display: inline;
+    text-align: left;
   }
  
 }
