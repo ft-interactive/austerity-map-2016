@@ -47,5 +47,8 @@
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp serve'",
     "deploy": "gulp deploy",
     "test": "npm run build"
+  },
+  "dependencies": {
+    "d3": "^3.5.16"
   }
 }
