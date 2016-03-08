@@ -174,7 +174,7 @@ export function drawRegionalMap(d, colDomain){
 	function summaryText (sum1016,sum1021,sum1621,name){
 		console.log("Summaries ",sum1016,sum1021,sum1621)
 		return `
-			<div id=class="studybody">${name+" is estimated to have lost a total of £"+sum1016.pa+" a year for each working-age adult as a result of the pre-2015 reforms and is anticipated to lose a further £"+sum1621.pa+" a year for each working-age adult as a result of the post-2015 reforms by 2021."}</div>
+			<div id=class="studybody">${name+" is estimated to have lost £"+sum1016.pa+" a year for each working-age adult as a result of the pre-2015 reforms. The area is anticipated to lose a further £"+sum1621.pa+" a year for each working-age adult as a result of the post-2015 reforms by 2021."}</div>
 			`;
 	}
 
