@@ -95,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	function buildData (trigger) {
-		console.log(trigger)
 		var mapData=[]
 		for (var i = 0; i < dataset.length; i++) {
 			mapData.push({id:dataset[i].authority.code,authname:dataset[i].authority.name,summary20102016:dataset[i].authority.summary20102016,summary20102021:dataset[i].authority.summary20102021,summary20162021:dataset[i].authority.summary20162021,value:dataset[i].authority[trigger].pa});

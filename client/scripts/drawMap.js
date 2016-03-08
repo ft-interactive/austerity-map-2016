@@ -17,8 +17,12 @@ export function drawmaps (mapData,colDomain, firstRun) {
 	document.getElementById('national').style.height=height+45+"px";
 
 	//Define map projection
+	if (width<300){
+		var centreX=5.5
+	}
+	else {var centreX=4.5}
 	var projection = d3.geo.mercator()
-						   .center([ -3, 55.4])
+						   .center([ -centreX, 55.4])
 						   .translate([ width/2, height/2 ])
 						   .scale([ width/0.27 ]);
 
@@ -93,6 +97,8 @@ export function drawmaps (mapData,colDomain, firstRun) {
 
 
 	function drawLegend(colDomain){
+		var mobilewidth = (document.getElementById('national').getBoundingClientRect().width)-margin.left - margin.right;
+		console.log("mobilewidth", mobilewidth)
 		var legend = d3.select("#GB").append('g')
 			.attr("width",100)
 			.attr("height",200);
@@ -110,11 +116,17 @@ export function drawmaps (mapData,colDomain, firstRun) {
 				.attr("x",27)
 				.attr("y",(i*18)+21)
 				.html(function() { 
-					if (i<3){
+					if ((i<3) && (mobilewidth>300)) {
 						return "less than £"+ colDomain[i]
 					}
-					else {
+					if ((i<3) && (mobilewidth<300)) {
+						return "< £"+ colDomain[i]
+					}
+					if ((i<=3) && (mobilewidth>300)) {
 						return "more than £"+ colDomain[i-1]
+					}
+					if ((i<=3) && (mobilewidth<300)) {
+						return "> £"+ colDomain[i-1]
 					}
 				});
 		}
@@ -153,7 +165,9 @@ export function drawRegionalMap(d, colDomain){
 	var sum1016=d.properties.sum20102016;
 	var sum1021=d.properties.sum20102021;
 	var sum1621=d.properties.sum20162021;
+	//Create hmtl foer the dynamic body using the summaryText function
 	var html=summaryText(sum1016,sum1021,sum1621)
+	//insert html into #dynamicBody foeld
 	div=d3.select("#dynamicBody")
 		.html(html);
 	//console.log(d.properties)
