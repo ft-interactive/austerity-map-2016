@@ -176,9 +176,7 @@ export function drawRegionalMap(d, colDomain){
 		return `
 			<div id=class="studybody">${name+" is estimated to have lost a total of £"+sum1016.pa+" a year for each working-age adult as a result of the pre-2015 reforms and is anticipated to lose a further £"+sum1621.pa+" a year for each working-age adult as a result of the post-2015 reforms by 2021."}</div>
 			`;
-	}//" a year for each working-age adult as a result of the post-2015 reforms by 2021."}</div>
-
-
+	}
 
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
 	var width = (document.getElementById('regional').getBoundingClientRect().width)-margin.left - margin.right;
