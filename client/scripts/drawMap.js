@@ -2,9 +2,12 @@ import d3 from 'd3';
 
 var mapJSON = {};
 var colours= ([ "#f4d4c1","#efb1af", "#e3726b", "#a64d67"]);
-var firstRun=true
+var selected
 //code based on Caroline Nevitt’s d3.module 4 exercise
-export function drawmaps (mapData,colDomain) {
+export function drawmaps (mapData,colDomain, firstRun) {
+	if (firstRun==true) {
+		selected= "E06000008"
+	}
 	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
 	.html("")
@@ -14,8 +17,12 @@ export function drawmaps (mapData,colDomain) {
 	document.getElementById('national').style.height=height+45+"px";
 
 	//Define map projection
+	if (width<300){
+		var centreX=5.5
+	}
+	else {var centreX=4.5}
 	var projection = d3.geo.mercator()
-						   .center([ -3, 55.4])
+						   .center([ -centreX, 55.4])
 						   .translate([ width/2, height/2 ])
 						   .scale([ width/0.27 ]);
 
@@ -48,6 +55,9 @@ export function drawmaps (mapData,colDomain) {
 			var dataValue = +mapData[i].value;
 			var summary = mapData[i].summary;
 			var authName = mapData[i].authname;
+			var sum20102016 = mapData[i].summary20102016;
+			var sum20102021 = mapData[i].summary20102021;
+			var sum20162021 = mapData[i].summary20162021;
 
 			//Find the corresponding ConstituencyID inside the GeoJSON
 			for (var j = 0; j < json.features.length; j++) {
@@ -58,8 +68,10 @@ export function drawmaps (mapData,colDomain) {
 					//Copy the data values into the GeoJSON
 					json.features[j].properties.value = dataValue;
 					json.features[j].properties.authName = authName;
-					json.features[j].properties.summary = summary;
-					
+					json.features[j].properties.sum20102016 = sum20102016;
+					json.features[j].properties.sum20102021 = sum20102021;
+					json.features[j].properties.sum20162021 = sum20162021;
+
 					//Stop looking through the JSON
 					break;
 				}
@@ -79,10 +91,14 @@ export function drawmaps (mapData,colDomain) {
 		   .on("click", function(d){
 		   		drawRegionalMap(d,colDomain);
 		   	});
+		   setupRegion(selected)
 	});
 	drawLegend(colDomain)
 
+
 	function drawLegend(colDomain){
+		var mobilewidth = (document.getElementById('national').getBoundingClientRect().width)-margin.left - margin.right;
+		console.log("mobilewidth", mobilewidth)
 		var legend = d3.select("#GB").append('g')
 			.attr("width",100)
 			.attr("height",200);
@@ -100,33 +116,28 @@ export function drawmaps (mapData,colDomain) {
 				.attr("x",27)
 				.attr("y",(i*18)+21)
 				.html(function() { 
-					if (i<3){
+					if ((i<3) && (mobilewidth>300)) {
 						return "less than £"+ colDomain[i]
 					}
-					else {
+					if ((i<3) && (mobilewidth<300)) {
+						return "< £"+ colDomain[i]
+					}
+					if ((i<=3) && (mobilewidth>300)) {
 						return "more than £"+ colDomain[i-1]
+					}
+					if ((i<=3) && (mobilewidth<300)) {
+						return "> £"+ colDomain[i-1]
 					}
 				});
 		}
 	}
 
-	if (firstRun) {
-		console.log(firstRun)
-		firstRun=false
+	function setupRegion(authcode) {
+			var el=d3.select("#"+authcode);
+			var data=el[0][0].__data__
+			drawRegionalMap(data,colDomain)
 
-		 d3.selection.prototype.trigger = function( event ) {
-		    var e = document.createEvent('Event');
-		    e.initEvent( event, true, true);
-		    this.each( function( d ) {
-		        this.dispatchEvent( e );    
-		    });    
-		   return this;
-		}
-
-		// var test = d3.select ("#E06000047");
-		// drawRegionalMap(test,colDomain)
 	}
-	console.log(firstRun)
 
 }
 	// var DefaultAuth="E06000008"
@@ -137,29 +148,38 @@ export function drawmaps (mapData,colDomain) {
 	// }
 
 export function drawRegionalMap(d, colDomain){
-	console.log("Regional",d.properties)
+	selected=d.properties.name
 	//This function bring the selection to the front
 	d3.selection.prototype.moveToFront = function() { 
 	  return this.each(function() { 
 	    this.parentNode.appendChild(this); 
 	  }); 
 	};
-	//Fills in dynamic text
+	//Fills in dynamic name fields
+	var name=d.properties.authName
 	var div=d3.select("#dynamicName")
-		.html(d.properties.authName);
+		.html(name);
 	div=d3.select("#nameholder")
-		.html(d.properties.authName);
-	var html=summaryText(d.properties.summary)
+		.html(name);
+	//set variables for summaries to pas to draw dynamic txt function
+	var sum1016=d.properties.sum20102016;
+	var sum1021=d.properties.sum20102021;
+	var sum1621=d.properties.sum20162021;
+	//Create hmtl foer the dynamic body using the summaryText function
+	var html=summaryText(sum1016,sum1021,sum1621)
+	//insert html into #dynamicBody foeld
 	div=d3.select("#dynamicBody")
 		.html(html);
+	//console.log(d.properties)
 
-	function summaryText (summary){
-		//console.log(summary)
-		// return `
-		// 	<div id=class="studybody">${"Total "+summary.total}</div>
-		// 	<div id=class="studybody">${"PA 2010-20 "+summary.pa20102020}</div>
-		// 	<div id=class="studybody">${"PA 2016-21 "+summary.pa20162021}</div>
-		// 	`;
+	function summaryText (sum1016,sum1021,sum1621){
+		console.log(sum1016,sum1021,sum1621)
+		return `
+			<div id=class="studybody">${"Over all impact between 2010-2016 was "+sum1016.total}</div>
+			<div id=class="studybody">${"PA for 2010-2016 was "+sum1016.pa}</div>
+			<div id=class="studybody">${"Pedicted impact between 2010-2021 was "+sum1021.total}</div>
+			<div id=class="studybody">${"Pedicted impact between 2016-2021 was "+sum1621.total}</div>
+			`;
 	}
 
 
@@ -177,30 +197,60 @@ export function drawRegionalMap(d, colDomain){
     .domain(colDomain)
     .range(colours);
 
+    var natMargin = {top: 10, right: 0, bottom: 10, left: 18};
+	var natWidth = (document.getElementById('regional').getBoundingClientRect().width) - (natMargin.left + natMargin.right);
+	var natHeight=(document.getElementById('regional').getBoundingClientRect().height) - (natMargin.top + natMargin.bottom + document.getElementById('nameholder').getBoundingClientRect().height);
+	// document.getElementById('regional').style.height=natHeight+45+"px";
+
+	//Define map projection
+	var natProjection = d3.geo.mercator()
+						   .center([ -3, 55.4])
+						   .translate([ natWidth/2, natHeight/2 ])
+						   .scale([ natWidth/0.27 ]);
+
 	//Define path generator
-	var newPath = d3.geo.path()
-				 .projection(newProjection);
+	var natPath = d3.geo.path()
+					 .projection(natProjection);
+
+    var bounds = natPath.bounds(d3.select('path#'+d.properties.name).data()[0]),
+      dx = bounds[1][0] - bounds[0][0],
+      dy = bounds[1][1] - bounds[0][1],
+      x = (bounds[0][0] + bounds[1][0]) / 2,
+      y = (bounds[0][1] + bounds[1][1]) / 2,
+      scale = .9 / Math.max(dx / natWidth, dy / (natHeight-57)),
+      translate = [natWidth / 2 - scale * x, (natHeight-57) / 2 - scale * y];
+
+  	console.log(scale,translate);
+
+	//Define path generator
+	// var newPath = d3.geo.path()
+	// 			 .projection(newProjection);
 
 	var regionalsvg = d3.select("#regionHolder")
 		.html("")
 		.append("svg")
-		.attr("width", width)
-		.attr("height", height-57);
+		.attr("width", natWidth)
+		.attr("height", natHeight-57);
 
-	regionalsvg.selectAll("path")
+	var g = regionalsvg.append('g');
+
+	g.style("stroke-width", 1.5 / scale + "px")
+      .attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+
+	g.selectAll("path")
 	   .data(mapJSON.features)
 	   .enter()
 	   .append("path")
-	   .attr("d", newPath)
+	   .attr("d", natPath)
 	   .attr("id", function (d) { return "new"+d.properties.name})
 	   .attr("fill",function (d) { return color(d.properties.value)})
 	   //.attr("fill","#ccc2c2")
 	   .style("stroke","#fff1e0")
-	   .style("stroke-width","1px")
+	   .style("stroke-width",2/scale + "px");
 
 	var highlight=d3.select("#new"+d.properties.name)
 		.style("stroke","#000000")
-		.style("stroke-width","2px");
+		.style("stroke-width",2/scale + "px");
 	
 	highlight.moveToFront();
 	var svg = d3.select("#GB");
@@ -211,13 +261,11 @@ export function drawRegionalMap(d, colDomain){
 	highlight=d3.select("#"+d.properties.name)
 		.style("stroke","#000000")
 		.style("stroke-width","2px");
-
-
 	};
 
 export function change_centre(d,colRange) {
 	colRange = colRange.split(',');
 	var el=d3.select("#"+d);
-	var data=el[0][0].__data__
+	var data=el[0][0].__data__	
 	drawRegionalMap(data,colRange)
 }

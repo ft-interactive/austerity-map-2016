@@ -62,11 +62,19 @@ p {
   margin-top: 10px;
   max-width: 666px;
   font-family: MetricWeb;
-  font-weight: 400;
+  font-weight: 00;
   font-size: 20px;
   color: #6b6e68;
   fill: #6b6e68;
 }
+.subhead {
+  margin-top: 5px;
+  font-family: MetricWeb;
+  font-weight: 400;
+  font-size: 14px;
+  color: #6b6e68;
+}
+
 .data-o-grid-colspan{
   margin-left: 0px;
 }
@@ -177,6 +185,16 @@ select { border: 1.5px solid #CCC }
   color: #6b6e68;
 }
 
+.source{
+  display: block;
+  margin: 0 auto;
+  margin-top: 8px;
+  margin-left: 10px;
+  font: 14px/1.2 FinancierText;
+  font-weight: 500;
+  color: #6b6e68;
+}
+
 //media buttons
 // share links
 $twitter-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMTMgLTEwMyA0MCA0MCI+PHBhdGggZmlsbD0iI2E3YTU5YiIgZD0iTS04MS44NjItODkuNzg2Yy0uODIuMzU3LTEuNy42LTIuNjI0LjcwOC45NDMtLjU1NiAxLjY2OC0xLjQzNiAyLjAxLTIuNDgzLS44ODMuNTEtMS44NjIuODgtMi45MDIgMS4wOC0uODMzLS44Ny0yLjAyLTEuNDItMy4zMzctMS40Mi0yLjUyMyAwLTQuNTcgMi4wMS00LjU3IDQuNDkgMCAuMzUuMDQuNjkuMTE4IDEuMDItMy44LS4xOS03LjE2Ny0xLjk3OC05LjQyLTQuNjktLjM5NC42Ni0uNjIgMS40My0uNjIgMi4yNiAwIDEuNTUuODA3IDIuOTMgMi4wMzMgMy43My0uNzUtLjAyNS0xLjQ1NC0uMjI4LTIuMDctLjU2di4wNTRjMCAyLjE3NiAxLjU3MyAzLjk5IDMuNjY3IDQuNC0uMzg0LjEwNC0uNzkuMTYtMS4yMDQuMTYtLjMgMC0uNTgtLjAyNy0uODYtLjA4LjU4IDEuNzgyIDIuMjcgMy4wOCA0LjI3IDMuMTE2LTEuNTcgMS4yMDUtMy41NCAxLjkyMy01LjY4IDEuOTIzLS4zNyAwLS43NC0uMDI2LTEuMDktLjA2NyAyLjAyIDEuMjcyIDQuNDIgMi4wMTUgNyAyLjAxNSA4LjQgMCAxMy02Ljg0IDEzLTEyLjc3IDAtLjE5NC0uMDA3LS4zOS0uMDE4LS41OC44OS0uNjMzIDEuNjY1LTEuNDI1IDIuMjgtMi4zMjV6Ii8+PC9zdmc+';
@@ -284,6 +302,13 @@ $linked-in-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3
     display: block;
     margin: 0 auto;
     margin-top: 10px;
+  }
+  .subhead {
+    margin-top: 5px;
+    font-family: MetricWeb;
+    font-weight: 400;
+    font-size: 16px;
+    color: #6b6e68;
   }
 
   .left{

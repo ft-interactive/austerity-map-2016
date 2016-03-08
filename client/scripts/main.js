@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	var ddlist = spreadsheet.ddlist;
 	var dataset = spreadsheet.data;
-	//console.log("dataset ",dataset);
 	var credits = spreadsheet.credits;
+	var firstRun = true
 
 
 	//console.log(credits)
@@ -64,22 +64,25 @@ document.addEventListener('DOMContentLoaded', () => {
 	event.on("change", function(d){
 		var e = document.getElementById("ddmenu");
 		var lookup = e.options[e.selectedIndex].value;
-		console.log('lookup', lookup, ddlist);
 		var colRange=ddlist[lookup].colrange;
-		console.log("colRange",colRange)
 		var value=ddlist[lookup].trigger;
+		
+		//fill in explainer text if needed
+		var explainerhtml=ddlist[lookup].description;
+		d3.select("#explain").html(explainerhtml);
+
+		
 		//create a dataset to draw the map with
 		var mapData=buildData(value)
-		drawmaps(mapData,colRange);
+		drawmaps(mapData,colRange,firstRun);
 	});
 
 	//Displays the map
 	setup();
 	//Adds dynamic text to the fourth case study
-	html=text1();
+	html=doStudyText();
 	document.getElementById('dynam1').innerHTML = html;
-	// var authCode="E07000168";
-	// change_centre(authCode);
+
 	
 	//Draws the default map of overall impact
 	function setup () {
@@ -87,14 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		var value=ddlist[0].trigger;
 		var colRange=ddlist[lookup].colrange;
 		var mapData=buildData(value)
-		drawmaps(mapData,colRange);
+		drawmaps(mapData,colRange,firstRun);
+		firstRun=false
 	}
 
 	function buildData (trigger) {
-		console.log(trigger)
 		var mapData=[]
 		for (var i = 0; i < dataset.length; i++) {
-			mapData.push({id:dataset[i].authority.code,authname:dataset[i].authority.name,summary:dataset[i].authority.summary,value:dataset[i].authority[trigger].pa});
+			mapData.push({id:dataset[i].authority.code,authname:dataset[i].authority.name,summary20102016:dataset[i].authority.summary20102016,summary20102021:dataset[i].authority.summary20102021,summary20162021:dataset[i].authority.summary20162021,value:dataset[i].authority[trigger].pa});
 
 		};
 		//value:dataset[i].authority[value].pa
@@ -108,10 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	`;
 	}
 
-	function text1() {
+	function doStudyText() {
 		return `
 			<div id="dynamicName" class="studyname">${"Study to come"}</div>
-			<div class="studypic"><img class="studypic" src="https://image.webservices.ft.com/v1/images/raw/ftcms:003dcddc-dfa1-11e5-b072-006d8d362ba3?source=ig&width=167" alt="Syria’s ‘mafia-style’ gas deals with jihadis"></div>
+			<div class="studypic"><img class="studypic" src="https://image.webservices.ft.com/v1/images/raw/ftcms:9dbb22f6-e520-11e5-a09b-1f8b0d268c39?source=ig&width=450" alt="Syria’s ‘mafia-style’ gas deals with jihadis"></div>
 			<div id="dynamicBody" class="studybody">${"Tesxt generated from within the script and handled by a variable"}</div>
 			`;
 	}
