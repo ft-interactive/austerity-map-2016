@@ -172,9 +172,9 @@ export function drawRegionalMap(d, colDomain){
     .range(colours);
 
     var natMargin = {top: 10, right: 0, bottom: 10, left: 18};
-	var natWidth = (document.getElementById('national').getBoundingClientRect().width)-natMargin.left - natMargin.right;
-	var natHeight=(natWidth*1.3);
-	document.getElementById('national').style.height=natHeight+45+"px";
+	var natWidth = (document.getElementById('regional').getBoundingClientRect().width) - (natMargin.left + natMargin.right);
+	var natHeight=(document.getElementById('regional').getBoundingClientRect().height) - (natMargin.top + natMargin.bottom + document.getElementById('nameholder').getBoundingClientRect().height);
+	// document.getElementById('regional').style.height=natHeight+45+"px";
 
 	//Define map projection
 	var natProjection = d3.geo.mercator()
@@ -191,8 +191,8 @@ export function drawRegionalMap(d, colDomain){
       dy = bounds[1][1] - bounds[0][1],
       x = (bounds[0][0] + bounds[1][0]) / 2,
       y = (bounds[0][1] + bounds[1][1]) / 2,
-      scale = .9 / Math.max(dx / natWidth, dy / natHeight),
-      translate = [natWidth / 2 - scale * x, natHeight / 2 - scale * y];
+      scale = .9 / Math.max(dx / natWidth, dy / (natHeight-57)),
+      translate = [natWidth / 2 - scale * x, (natHeight-57) / 2 - scale * y];
 
   	console.log(scale,translate);
 
@@ -203,14 +203,12 @@ export function drawRegionalMap(d, colDomain){
 	var regionalsvg = d3.select("#regionHolder")
 		.html("")
 		.append("svg")
-		.attr("width", width)
-		.attr("height", height-57);
+		.attr("width", natWidth)
+		.attr("height", natHeight-57);
 
 	var g = regionalsvg.append('g');
 
-	g.transition()
-      .duration(750)
-      .style("stroke-width", 1.5 / scale + "px")
+	g.style("stroke-width", 1.5 / scale + "px")
       .attr("transform", "translate(" + translate + ")scale(" + scale + ")");
 
 	g.selectAll("path")
