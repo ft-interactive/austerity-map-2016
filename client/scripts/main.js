@@ -113,9 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function doStudyText() {
 		return `
-			<div id="dynamicName" class="studyname">${""}</div>
-			<div class="studypic"><img class="studypic" src="https://image.webservices.ft.com/v1/images/raw/ftcms:34e0aa66-e544-11e5-a09b-1f8b0d268c39?source=ig&width=450" alt="Syria’s ‘mafia-style’ gas deals with jihadis"></div>
-			<div id="dynamicBody" class="studybody">${""}</div>
+			<div id="dynamicName" class="studyname">${"Study to come"}</div>
+			<div class="studypic"><img class="studypic" src="https://image.webservices.ft.com/v1/images/raw/ftcms:9dbb22f6-e520-11e5-a09b-1f8b0d268c39?source=ig&width=450" alt="Syria’s ‘mafia-style’ gas deals with jihadis"></div>
+			<div id="dynamicBody" class="studybody">${"Tesxt generated from within the script and handled by a variable"}</div>
 			`;
 	}
 

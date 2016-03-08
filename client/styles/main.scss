@@ -38,8 +38,6 @@ h1 {
 }
 
 .byline {
-  display: block;
-  margin: 0 auto;
   font: 14px/1.20 FinancierText;
   text-align: center;
   color: #333;
@@ -52,11 +50,6 @@ h1 {
   margin: 0 auto;
   margin-top: 10px;
   color: #6b6e68;
-}
-
-.ftlink {
-  color: #2e6e9e;
-  text-decoration: none;
 }
 
 p {
@@ -101,6 +94,9 @@ select { border: 1.5px solid #CCC }
   padding-left: 0px;
 }
 
+.o-forms-select{
+  margin-top: 5px;
+}
 
 .o-forms-affix-wrapper {
   margin-top: 11px;
@@ -111,8 +107,8 @@ select { border: 1.5px solid #CCC }
   margin-top: 10px;
 }
 .legend {
-  font-family: MetricWeb;
-  font-weight: 400;
+   font-family: MetricWeb;
+  font-weight: 300;
   font-size: 14px;
   fill: #6b6e68;
 }
@@ -190,13 +186,6 @@ select { border: 1.5px solid #CCC }
   margin-left: 10px;
   font: 14px/1.2 FinancierText;
   font-weight: 500;
-  color: #6b6e68;
-}
-
-.mapSource{
-  font-family: MetricWeb;
-  font-weight: 400;
-  font-size: 14px;
   color: #6b6e68;
 }
 
@@ -327,6 +316,9 @@ $linked-in-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3
     padding-left: 0px;
   }
 
+  .o-forms-select{
+    margin-top: 5px;
+  }
 
   .o-forms-affix-wrapper {
     margin-top: 11px;
@@ -342,7 +334,7 @@ $linked-in-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3
   .right{
     display: block;
     margin: 0 auto;
-    margin-top: 1px;
+    margin-top: 5px;
   }
 
   .dynamic {
@@ -391,11 +383,6 @@ $linked-in-logo: 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3
     font: 15px/1.2 FinancierText;
     color: #6b6e68;
     margin-top: 8px;
-  }
-
-  .bodydynamic {
-    display: inline;
-    text-align: left;
   }
  
 }
