@@ -79,8 +79,10 @@ export function drawmaps (mapData,colDomain) {
 		   .on("click", function(d){
 		   		drawRegionalMap(d,colDomain);
 		   	});
+		   setupRegion()
 	});
 	drawLegend(colDomain)
+
 
 	function drawLegend(colDomain){
 		var legend = d3.select("#GB").append('g')
@@ -110,23 +112,18 @@ export function drawmaps (mapData,colDomain) {
 		}
 	}
 
-	if (firstRun) {
-		console.log(firstRun)
-		firstRun=false
-
-		 d3.selection.prototype.trigger = function( event ) {
-		    var e = document.createEvent('Event');
-		    e.initEvent( event, true, true);
-		    this.each( function( d ) {
-		        this.dispatchEvent( e );    
-		    });    
-		   return this;
+	function setupRegion() {
+		if (firstRun) {
+			console.log(firstRun)
+			firstRun=false
+			var authCode = "E06000008";
+			var el=d3.select("#"+authCode);
+			var data=el[0][0].__data__
+			drawRegionalMap(data,colDomain)
 		}
+		console.log(firstRun)
 
-		// var test = d3.select ("#E06000047");
-		// drawRegionalMap(test,colDomain)
 	}
-	console.log(firstRun)
 
 }
 	// var DefaultAuth="E06000008"
@@ -218,6 +215,7 @@ export function drawRegionalMap(d, colDomain){
 export function change_centre(d,colRange) {
 	colRange = colRange.split(',');
 	var el=d3.select("#"+d);
+	console.log("change_centre selection",el)
 	var data=el[0][0].__data__
 	drawRegionalMap(data,colRange)
 }
