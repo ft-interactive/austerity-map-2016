@@ -171,9 +171,34 @@ export function drawRegionalMap(d, colDomain){
     .domain(colDomain)
     .range(colours);
 
+    var natMargin = {top: 10, right: 0, bottom: 10, left: 18};
+	var natWidth = (document.getElementById('national').getBoundingClientRect().width)-natMargin.left - natMargin.right;
+	var natHeight=(natWidth*1.3);
+	document.getElementById('national').style.height=natHeight+45+"px";
+
+	//Define map projection
+	var natProjection = d3.geo.mercator()
+						   .center([ -3, 55.4])
+						   .translate([ natWidth/2, natHeight/2 ])
+						   .scale([ natWidth/0.27 ]);
+
 	//Define path generator
-	var newPath = d3.geo.path()
-				 .projection(newProjection);
+	var natPath = d3.geo.path()
+					 .projection(natProjection);
+
+    var bounds = natPath.bounds(d3.select('path#'+d.properties.name).data()[0]),
+      dx = bounds[1][0] - bounds[0][0],
+      dy = bounds[1][1] - bounds[0][1],
+      x = (bounds[0][0] + bounds[1][0]) / 2,
+      y = (bounds[0][1] + bounds[1][1]) / 2,
+      scale = .9 / Math.max(dx / natWidth, dy / natHeight),
+      translate = [natWidth / 2 - scale * x, natHeight / 2 - scale * y];
+
+  	console.log(scale,translate);
+
+	//Define path generator
+	// var newPath = d3.geo.path()
+	// 			 .projection(newProjection);
 
 	var regionalsvg = d3.select("#regionHolder")
 		.html("")
@@ -181,20 +206,27 @@ export function drawRegionalMap(d, colDomain){
 		.attr("width", width)
 		.attr("height", height-57);
 
-	regionalsvg.selectAll("path")
+	var g = regionalsvg.append('g');
+
+	g.transition()
+      .duration(750)
+      .style("stroke-width", 1.5 / scale + "px")
+      .attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+
+	g.selectAll("path")
 	   .data(mapJSON.features)
 	   .enter()
 	   .append("path")
-	   .attr("d", newPath)
+	   .attr("d", natPath)
 	   .attr("id", function (d) { return "new"+d.properties.name})
 	   .attr("fill",function (d) { return color(d.properties.value)})
 	   //.attr("fill","#ccc2c2")
 	   .style("stroke","#fff1e0")
-	   .style("stroke-width","1px")
+	   .style("stroke-width",2/scale + "px");
 
 	var highlight=d3.select("#new"+d.properties.name)
 		.style("stroke","#000000")
-		.style("stroke-width","2px");
+		.style("stroke-width",2/scale + "px");
 	
 	highlight.moveToFront();
 	var svg = d3.select("#GB");
