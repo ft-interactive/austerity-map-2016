@@ -98,7 +98,6 @@ export function drawmaps (mapData,colDomain, firstRun) {
 
 	function drawLegend(colDomain){
 		var mobilewidth = (document.getElementById('national').getBoundingClientRect().width)-margin.left - margin.right;
-		console.log("mobilewidth", mobilewidth)
 		var legend = d3.select("#GB").append('g')
 			.attr("width",100)
 			.attr("height",200);
@@ -116,16 +115,16 @@ export function drawmaps (mapData,colDomain, firstRun) {
 				.attr("x",27)
 				.attr("y",(i*18)+21)
 				.html(function() { 
-					if ((i<3) && (mobilewidth>300)) {
+					if ((i<3) && (mobilewidth>320)) {
 						return "less than £"+Number(colDomain[i])
 					}
-					if ((i<3) && (mobilewidth<300)) {
+					if ((i<3) && (mobilewidth<320)) {
 						return "< £"+Number(colDomain[i])
 					}
-					if ((i<=3) && (mobilewidth>300)) {
+					if ((i<=3) && (mobilewidth>320)) {
 						return "more than £"+Number(colDomain[i-1])
 					}
-					if ((i<=3) && (mobilewidth<300)) {
+					if ((i<=3) && (mobilewidth<320)) {
 						return "> £"+Number(colDomain[i-1])
 					}
 				});
@@ -176,9 +175,11 @@ export function drawRegionalMap(d, colDomain){
 		console.log(sum1016,sum1021,sum1621)
 		return `
 			<div id=class="studybody">${"Over all impact between 2010-2016 was "+sum1016.total}</div>
-			<div id=class="studybody">${"PA for 2010-2016 was "+sum1016.pa}</div>
+			<div id=class="studybody">${"PA for 2010-2016 was £"+sum1016.pa}</div>
 			<div id=class="studybody">${"Pedicted impact between 2010-2021 was "+sum1021.total}</div>
+			<div id=class="studybody">${"PA for 2010-2021 was £"+sum1021.pa}</div>
 			<div id=class="studybody">${"Pedicted impact between 2016-2021 was "+sum1621.total}</div>
+			<div id=class="studybody">${"PA for 2016-2021 was £"+sum1621.pa}</div>
 			`;
 	}
 
@@ -220,7 +221,7 @@ export function drawRegionalMap(d, colDomain){
       scale = .9 / Math.max(dx / natWidth, dy / (natHeight-57)),
       translate = [natWidth / 2 - scale * x, (natHeight-57) / 2 - scale * y];
 
-  	console.log(scale,translate);
+  	//console.log(scale,translate);
 
 	//Define path generator
 	// var newPath = d3.geo.path()
