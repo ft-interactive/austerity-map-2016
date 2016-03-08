@@ -117,16 +117,16 @@ export function drawmaps (mapData,colDomain, firstRun) {
 				.attr("y",(i*18)+21)
 				.html(function() { 
 					if ((i<3) && (mobilewidth>300)) {
-						return "less than £"+ colDomain[i]
+						return "less than £"+Number(colDomain[i])
 					}
 					if ((i<3) && (mobilewidth<300)) {
-						return "< £"+ colDomain[i]
+						return "< £"+Number(colDomain[i])
 					}
 					if ((i<=3) && (mobilewidth>300)) {
-						return "more than £"+ colDomain[i-1]
+						return "more than £"+Number(colDomain[i-1])
 					}
 					if ((i<=3) && (mobilewidth<300)) {
-						return "> £"+ colDomain[i-1]
+						return "> £"+Number(colDomain[i-1])
 					}
 				});
 		}
