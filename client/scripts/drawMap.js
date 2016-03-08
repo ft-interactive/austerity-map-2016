@@ -14,7 +14,7 @@ export function drawmaps (mapData,colDomain, firstRun) {
 	.html("")
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
 	var width = (document.getElementById('national').getBoundingClientRect().width)-margin.left - margin.right;
-	var height=(width*1.3);
+	var height=(width*1.25);
 	document.getElementById('national').style.height=height+45+"px";
 
 	//Define map projection
@@ -165,24 +165,18 @@ export function drawRegionalMap(d, colDomain){
 	var sum1021=d.properties.sum20102021;
 	var sum1621=d.properties.sum20162021;
 	//Create hmtl for the #dynamicBody using the summaryText function
-	var html=summaryText(sum1016,sum1021,sum1621)
+	var html=summaryText(sum1016,sum1021,sum1621,name)
 	//insert html into #dynamicBody div
 	div=d3.select("#dynamicBody")
 		.html(html);
 	//console.log(d.properties)
 
-	function summaryText (sum1016,sum1021,sum1621){
-		console.log("Summaries ",sum1016,sum1021,sum1621)
+	function summaryText (sum1016,sum1021,sum1621,name){
+		//console.log("Summaries ",sum1016,sum1021,sum1621)
 		return `
-			<div id=class="studybody">${"Over all impact between 2010-2016 was "+sum1016.total}</div>
-			<div id=class="studybody">${"PA for 2010-2016 was £"+sum1016.pa}</div>
-			<div id=class="studybody">${"Pedicted impact between 2010-2021 was "+sum1021.total}</div>
-			<div id=class="studybody">${"PA for 2010-2021 was £"+sum1021.pa}</div>
-			<div id=class="studybody">${"Pedicted impact between 2016-2021 was "+sum1621.total}</div>
-			<div id=class="studybody">${"PA for 2016-2021 was £"+sum1621.pa}</div>
+			<div id=class="studybody">${name+" is estimated to have lost £"+sum1016.pa+" a year for each working-age adult as a result of the pre-2015 reforms. The area is anticipated to lose a further £"+sum1621.pa+" a year for each working-age adult as a result of the post-2015 reforms by 2021."}</div>
 			`;
 	}
-
 
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
 	var width = (document.getElementById('regional').getBoundingClientRect().width)-margin.left - margin.right;
@@ -218,8 +212,8 @@ export function drawRegionalMap(d, colDomain){
       dy = bounds[1][1] - bounds[0][1],
       x = (bounds[0][0] + bounds[1][0]) / 2,
       y = (bounds[0][1] + bounds[1][1]) / 2,
-      scale = .9 / Math.max(dx / natWidth, dy / (natHeight-57)),
-      translate = [natWidth / 2 - scale * x, (natHeight-57) / 2 - scale * y];
+      scale = .9 / Math.max(dx / natWidth, dy / (natHeight-45)),
+      translate = [natWidth / 2 - scale * x, (natHeight-45) / 2 - scale * y];
 
 	//Define path generator
 	// var newPath = d3.geo.path()
@@ -229,7 +223,7 @@ export function drawRegionalMap(d, colDomain){
 		.html("")
 		.append("svg")
 		.attr("width", natWidth)
-		.attr("height", natHeight-57);
+		.attr("height", natHeight-45);
 
 	var g = regionalsvg.append('g');
 
