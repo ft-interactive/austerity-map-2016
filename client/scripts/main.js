@@ -69,6 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		var colRange=ddlist[lookup].colrange;
 		console.log("colRange",colRange)
 		var value=ddlist[lookup].trigger;
+		//fill in explainer text if needed
+		//var explainerhtml=ddlist[lookup].special.description;
+		//console.log("explainerhtml", explainerhtmlsg)
 		//create a dataset to draw the map with
 		var mapData=buildData(value)
 		drawmaps(mapData,colRange,firstRun);

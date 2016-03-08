@@ -5,9 +5,7 @@ var colours= ([ "#f4d4c1","#efb1af", "#e3726b", "#a64d67"]);
 var selected
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain, firstRun) {
-	console.log("first",firstRun)
 	if (firstRun==true) {
-		console.log("changing")
 		selected= "E06000008"
 	}
 	colDomain = colDomain.split(',');
@@ -84,7 +82,6 @@ export function drawmaps (mapData,colDomain, firstRun) {
 		   .on("click", function(d){
 		   		drawRegionalMap(d,colDomain);
 		   	});
-		   console.log("selected at callback ",selected)
 		   setupRegion(selected)
 	});
 	drawLegend(colDomain)
@@ -135,7 +132,6 @@ export function drawmaps (mapData,colDomain, firstRun) {
 
 export function drawRegionalMap(d, colDomain){
 	selected=d.properties.name
-	console.log("Regional",d.properties)
 	//This function bring the selection to the front
 	d3.selection.prototype.moveToFront = function() { 
 	  return this.each(function() { 
@@ -214,7 +210,6 @@ export function drawRegionalMap(d, colDomain){
 export function change_centre(d,colRange) {
 	colRange = colRange.split(',');
 	var el=d3.select("#"+d);
-	console.log("change_centre selection",el)
 	data=el[0][0].__data__	
 	drawRegionalMap(data,colRange)
 }
