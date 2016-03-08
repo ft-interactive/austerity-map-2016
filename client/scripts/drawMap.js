@@ -165,23 +165,19 @@ export function drawRegionalMap(d, colDomain){
 	var sum1021=d.properties.sum20102021;
 	var sum1621=d.properties.sum20162021;
 	//Create hmtl for the #dynamicBody using the summaryText function
-	var html=summaryText(sum1016,sum1021,sum1621)
+	var html=summaryText(sum1016,sum1021,sum1621,name)
 	//insert html into #dynamicBody div
 	div=d3.select("#dynamicBody")
 		.html(html);
 	//console.log(d.properties)
 
-	function summaryText (sum1016,sum1021,sum1621){
+	function summaryText (sum1016,sum1021,sum1621,name){
 		console.log("Summaries ",sum1016,sum1021,sum1621)
 		return `
-			<div id=class="studybody">${"Over all impact between 2010-2016 was "+sum1016.total}</div>
-			<div id=class="studybody">${"PA for 2010-2016 was £"+sum1016.pa}</div>
-			<div id=class="studybody">${"Pedicted impact between 2010-2021 was "+sum1021.total}</div>
-			<div id=class="studybody">${"PA for 2010-2021 was £"+sum1021.pa}</div>
-			<div id=class="studybody">${"Pedicted impact between 2016-2021 was "+sum1621.total}</div>
-			<div id=class="studybody">${"PA for 2016-2021 was £"+sum1621.pa}</div>
+			<div id=class="studybody">${name+" is estimated to have lost a total of £"+sum1016.pa+" a year for each working-age adult as a result of the pre-2015 reforms and is anticipated to lose a further £"+sum1621.pa+" a year for each working-age adult as a result of the post-2015 reforms by 2021."}</div>
 			`;
-	}
+	}//" a year for each working-age adult as a result of the post-2015 reforms by 2021."}</div>
+
 
 
 	var margin = {top: 10, right: 0, bottom: 10, left: 18};
