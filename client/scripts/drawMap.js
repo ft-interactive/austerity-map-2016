@@ -257,6 +257,7 @@ export function drawRegionalMap(d, colDomain){
 	highlight=d3.select("#"+d.properties.name)
 		.style("stroke","#000000")
 		.style("stroke-width","2px");
+	highlight.moveToFront();
 	};
 
 //Tkes a regiona code and selects the path then passes the bound data to the draw regional map function
