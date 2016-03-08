@@ -5,8 +5,9 @@ var colours= ([ "#f4d4c1","#efb1af", "#e3726b", "#a64d67"]);
 var selected
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain, firstRun) {
+	//Sets the first regional map as Blackburn on setup
 	if (firstRun==true) {
-		selected= "E06000008"
+		selected= "E06000008"//Change this code to alter the default local authority
 	}
 	colDomain = colDomain.split(',');
 	var svg = d3.select("#mapHolder")
@@ -17,8 +18,12 @@ export function drawmaps (mapData,colDomain, firstRun) {
 	document.getElementById('national').style.height=height+45+"px";
 
 	//Define map projection
+	if (width<300){
+		var centreX=-5.5
+	}
+	else {var centreX=-4.5}
 	var projection = d3.geo.mercator()
-						   .center([ -3, 55.4])
+						   .center([ centreX, 55.4])
 						   .translate([ width/2, height/2 ])
 						   .scale([ width/0.27 ]);
 
@@ -51,6 +56,9 @@ export function drawmaps (mapData,colDomain, firstRun) {
 			var dataValue = +mapData[i].value;
 			var summary = mapData[i].summary;
 			var authName = mapData[i].authname;
+			var sum20102016 = mapData[i].summary20102016;
+			var sum20102021 = mapData[i].summary20102021;
+			var sum20162021 = mapData[i].summary20162021;
 
 			//Find the corresponding ConstituencyID inside the GeoJSON
 			for (var j = 0; j < json.features.length; j++) {
@@ -61,8 +69,10 @@ export function drawmaps (mapData,colDomain, firstRun) {
 					//Copy the data values into the GeoJSON
 					json.features[j].properties.value = dataValue;
 					json.features[j].properties.authName = authName;
-					json.features[j].properties.summary = summary;
-					
+					json.features[j].properties.sum20102016 = sum20102016;
+					json.features[j].properties.sum20102021 = sum20102021;
+					json.features[j].properties.sum20162021 = sum20162021;
+
 					//Stop looking through the JSON
 					break;
 				}
@@ -86,8 +96,15 @@ export function drawmaps (mapData,colDomain, firstRun) {
 	});
 	drawLegend(colDomain)
 
+	function setupRegion(authcode) {
+			var el=d3.select("#"+authcode);
+			var data=el[0][0].__data__
+			drawRegionalMap(data,colDomain)
+
+	}
 
 	function drawLegend(colDomain){
+		var mobilewidth = (document.getElementById('national').getBoundingClientRect().width)-margin.left - margin.right;
 		var legend = d3.select("#GB").append('g')
 			.attr("width",100)
 			.attr("height",200);
@@ -105,21 +122,20 @@ export function drawmaps (mapData,colDomain, firstRun) {
 				.attr("x",27)
 				.attr("y",(i*18)+21)
 				.html(function() { 
-					if (i<3){
-						return "less than £"+ colDomain[i]
+					if ((i<3) && (mobilewidth>300)) {
+						return "less than £"+Number(colDomain[i])
 					}
-					else {
-						return "more than £"+ colDomain[i-1]
+					if ((i<3) && (mobilewidth<300)) {
+						return "< £"+Number(colDomain[i])
+					}
+					if ((i<=3) && (mobilewidth>300)) {
+						return "more than £"+Number(colDomain[i-1])
+					}
+					if ((i<=3) && (mobilewidth<300)) {
+						return "> £"+Number(colDomain[i-1])
 					}
 				});
 		}
-	}
-
-	function setupRegion(authcode) {
-			var el=d3.select("#"+authcode);
-			var data=el[0][0].__data__
-			drawRegionalMap(data,colDomain)
-
 	}
 
 }
@@ -138,22 +154,33 @@ export function drawRegionalMap(d, colDomain){
 	    this.parentNode.appendChild(this); 
 	  }); 
 	};
-	//Fills in dynamic text
+	//Fills in dynamic name fields above map and case study block
+	var name=d.properties.authName
 	var div=d3.select("#dynamicName")
-		.html(d.properties.authName);
+		.html(name);
 	div=d3.select("#nameholder")
-		.html(d.properties.authName);
-	var html=summaryText(d.properties.summary)
+		.html(name);
+	//set variables for summaries to pas to draw dynamic text function
+	var sum1016=d.properties.sum20102016;
+	var sum1021=d.properties.sum20102021;
+	var sum1621=d.properties.sum20162021;
+	//Create hmtl for the #dynamicBody using the summaryText function
+	var html=summaryText(sum1016,sum1021,sum1621)
+	//insert html into #dynamicBody div
 	div=d3.select("#dynamicBody")
 		.html(html);
+	//console.log(d.properties)
 
-	function summaryText (summary){
-		//console.log(summary)
-		// return `
-		// 	<div id=class="studybody">${"Total "+summary.total}</div>
-		// 	<div id=class="studybody">${"PA 2010-20 "+summary.pa20102020}</div>
-		// 	<div id=class="studybody">${"PA 2016-21 "+summary.pa20162021}</div>
-		// 	`;
+	function summaryText (sum1016,sum1021,sum1621){
+		console.log("Summaries ",sum1016,sum1021,sum1621)
+		return `
+			<div id=class="studybody">${"Over all impact between 2010-2016 was "+sum1016.total}</div>
+			<div id=class="studybody">${"PA for 2010-2016 was £"+sum1016.pa}</div>
+			<div id=class="studybody">${"Pedicted impact between 2010-2021 was "+sum1021.total}</div>
+			<div id=class="studybody">${"PA for 2010-2021 was £"+sum1021.pa}</div>
+			<div id=class="studybody">${"Pedicted impact between 2016-2021 was "+sum1621.total}</div>
+			<div id=class="studybody">${"PA for 2016-2021 was £"+sum1621.pa}</div>
+			`;
 	}
 
 
@@ -194,8 +221,6 @@ export function drawRegionalMap(d, colDomain){
       scale = .9 / Math.max(dx / natWidth, dy / (natHeight-57)),
       translate = [natWidth / 2 - scale * x, (natHeight-57) / 2 - scale * y];
 
-  	console.log(natHeight,scale,translate);
-
 	//Define path generator
 	// var newPath = d3.geo.path()
 	// 			 .projection(newProjection);
@@ -222,21 +247,25 @@ export function drawRegionalMap(d, colDomain){
 	   .style("stroke","#fff1e0")
 	   .style("stroke-width",2/scale + "px");
 
+	//put black stroke around selected authority on regional map
 	var highlight=d3.select("#new"+d.properties.name)
 		.style("stroke","#000000")
 		.style("stroke-width",2/scale + "px");
 	
+	//Make sure that this is in the fron t of the other paths so that the border shows all the way round
 	highlight.moveToFront();
 	var svg = d3.select("#GB");
 	var districts = svg.selectAll("path")
 		.style("stroke","#fff1e0")
 		.style("stroke-width","0px");
 
+	//put black stroke around selected authority on national map
 	highlight=d3.select("#"+d.properties.name)
 		.style("stroke","#000000")
 		.style("stroke-width","2px");
 	};
 
+//Tkes a regiona code and selects the path then passes the bound data to the draw regional map function
 export function change_centre(d,colRange) {
 	colRange = colRange.split(',');
 	var el=d3.select("#"+d);
