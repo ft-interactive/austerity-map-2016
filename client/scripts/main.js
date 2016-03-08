@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	attachFastClick(document.body);
 
 	var ddlist = spreadsheet.ddlist;
+	console.log("ddlist",ddlist)
 	var dataset = spreadsheet.data;
 	//console.log("dataset ",dataset);
 	var credits = spreadsheet.credits;
@@ -65,13 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	event.on("change", function(d){
 		var e = document.getElementById("ddmenu");
 		var lookup = e.options[e.selectedIndex].value;
-		console.log('lookup', lookup, ddlist);
 		var colRange=ddlist[lookup].colrange;
-		console.log("colRange",colRange)
 		var value=ddlist[lookup].trigger;
+		
 		//fill in explainer text if needed
-		//var explainerhtml=ddlist[lookup].special.description;
-		//console.log("explainerhtml", explainerhtmlsg)
+		// var explainerhtml=ddlist[lookup].special.description;
+		// console.log("explainerhtml", explainerhtml)
+		
 		//create a dataset to draw the map with
 		var mapData=buildData(value)
 		drawmaps(mapData,colRange,firstRun);
@@ -82,8 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	//Adds dynamic text to the fourth case study
 	html=text1();
 	document.getElementById('dynam1').innerHTML = html;
-	// var authCode="E07000168";
-	// change_centre(authCode);
+
 	
 	//Draws the default map of overall impact
 	function setup () {

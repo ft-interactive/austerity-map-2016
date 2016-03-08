@@ -210,6 +210,6 @@ export function drawRegionalMap(d, colDomain){
 export function change_centre(d,colRange) {
 	colRange = colRange.split(',');
 	var el=d3.select("#"+d);
-	data=el[0][0].__data__	
+	var data=el[0][0].__data__	
 	drawRegionalMap(data,colRange)
 }
