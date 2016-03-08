@@ -5,7 +5,6 @@ var colours= ([ "#f4d4c1","#efb1af", "#e3726b", "#a64d67"]);
 var selected
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain, firstRun) {
-	console.log(mapData)
 	if (firstRun==true) {
 		selected= "E06000008"
 	}
@@ -68,7 +67,7 @@ export function drawmaps (mapData,colDomain, firstRun) {
 					json.features[j].properties.sum20102016 = sum20102016;
 					json.features[j].properties.sum20102021 = sum20102021;
 					json.features[j].properties.sum20162021 = sum20162021;
-					
+
 					//Stop looking through the JSON
 					break;
 				}
@@ -144,23 +143,29 @@ export function drawRegionalMap(d, colDomain){
 	    this.parentNode.appendChild(this); 
 	  }); 
 	};
-	//Fills in dynamic text
+	//Fills in dynamic name fields
+	var name=d.properties.authName
 	var div=d3.select("#dynamicName")
-		.html(d.properties.authName);
+		.html(name);
 	div=d3.select("#nameholder")
-		.html(d.properties.authName);
-	var html=summaryText(d.properties.summary)
+		.html(name);
+	//set variables for summaries to pas to draw dynamic txt function
+	var sum1016=d.properties.sum20102016;
+	var sum1021=d.properties.sum20102021;
+	var sum1621=d.properties.sum20162021;
+	var html=summaryText(sum1016,sum1021,sum1621)
 	div=d3.select("#dynamicBody")
 		.html(html);
-	console.log(d.properties)
+	//console.log(d.properties)
 
-	function summaryText (summary){
-		//console.log(summary)
-		// return `
-		// 	<div id=class="studybody">${"Total "+summary.total}</div>
-		// 	<div id=class="studybody">${"PA 2010-20 "+summary.pa20102020}</div>
-		// 	<div id=class="studybody">${"PA 2016-21 "+summary.pa20162021}</div>
-		// 	`;
+	function summaryText (sum1016,sum1021,sum1621){
+		console.log(sum1016,sum1021,sum1621)
+		return `
+			<div id=class="studybody">${"Over all impact between 2010-2016 was "+sum1016.total}</div>
+			<div id=class="studybody">${"PA for 2010-2016 was "+sum1016.pa}</div>
+			<div id=class="studybody">${"Pedicted impact between 2010-2021 was "+sum1021.total}</div>
+			<div id=class="studybody">${"Pedicted impact between 2016-2021 was "+sum1621.total}</div>
+			`;
 	}
 
 
