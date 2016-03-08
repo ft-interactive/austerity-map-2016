@@ -104,7 +104,7 @@ export function drawmaps (mapData,colDomain) {
 						return "less than £"+ colDomain[i]
 					}
 					else {
-						return "more than £" + colDomain[i-1]
+						return "more than £"+ colDomain[i-1]
 					}
 				});
 		}
