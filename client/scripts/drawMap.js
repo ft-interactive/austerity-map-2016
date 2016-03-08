@@ -5,6 +5,7 @@ var colours= ([ "#f4d4c1","#efb1af", "#e3726b", "#a64d67"]);
 var selected
 //code based on Caroline Nevitt’s d3.module 4 exercise
 export function drawmaps (mapData,colDomain, firstRun) {
+	console.log(mapData)
 	if (firstRun==true) {
 		selected= "E06000008"
 	}
@@ -51,6 +52,9 @@ export function drawmaps (mapData,colDomain, firstRun) {
 			var dataValue = +mapData[i].value;
 			var summary = mapData[i].summary;
 			var authName = mapData[i].authname;
+			var sum20102016 = mapData[i].summary20102016;
+			var sum20102021 = mapData[i].summary20102021;
+			var sum20162021 = mapData[i].summary20162021;
 
 			//Find the corresponding ConstituencyID inside the GeoJSON
 			for (var j = 0; j < json.features.length; j++) {
@@ -61,7 +65,9 @@ export function drawmaps (mapData,colDomain, firstRun) {
 					//Copy the data values into the GeoJSON
 					json.features[j].properties.value = dataValue;
 					json.features[j].properties.authName = authName;
-					json.features[j].properties.summary = summary;
+					json.features[j].properties.sum20102016 = sum20102016;
+					json.features[j].properties.sum20102021 = sum20102021;
+					json.features[j].properties.sum20162021 = sum20162021;
 					
 					//Stop looking through the JSON
 					break;
@@ -146,6 +152,7 @@ export function drawRegionalMap(d, colDomain){
 	var html=summaryText(d.properties.summary)
 	div=d3.select("#dynamicBody")
 		.html(html);
+	console.log(d.properties)
 
 	function summaryText (summary){
 		//console.log(summary)

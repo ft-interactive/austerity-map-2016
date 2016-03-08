@@ -12,9 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	attachFastClick(document.body);
 
 	var ddlist = spreadsheet.ddlist;
-	console.log("ddlist",ddlist)
 	var dataset = spreadsheet.data;
-	//console.log("dataset ",dataset);
 	var credits = spreadsheet.credits;
 	var firstRun = true
 
@@ -70,8 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		var value=ddlist[lookup].trigger;
 		
 		//fill in explainer text if needed
-		// var explainerhtml=ddlist[lookup].special.description;
-		// console.log("explainerhtml", explainerhtml)
+		var explainerhtml=ddlist[lookup].description;
+		d3.select("#explain").html(explainerhtml);
+
 		
 		//create a dataset to draw the map with
 		var mapData=buildData(value)
@@ -81,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	//Displays the map
 	setup();
 	//Adds dynamic text to the fourth case study
-	html=text1();
+	html=doStudyText();
 	document.getElementById('dynam1').innerHTML = html;
 
 	
@@ -99,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log(trigger)
 		var mapData=[]
 		for (var i = 0; i < dataset.length; i++) {
-			mapData.push({id:dataset[i].authority.code,authname:dataset[i].authority.name,summary:dataset[i].authority.summary,value:dataset[i].authority[trigger].pa});
+			mapData.push({id:dataset[i].authority.code,authname:dataset[i].authority.name,summary20102016:dataset[i].authority.summary20102016,summary20102021:dataset[i].authority.summary20102021,summary20162021:dataset[i].authority.summary20162021,value:dataset[i].authority[trigger].pa});
 
 		};
 		//value:dataset[i].authority[value].pa
@@ -113,10 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	`;
 	}
 
-	function text1() {
+	function doStudyText() {
 		return `
 			<div id="dynamicName" class="studyname">${"Study to come"}</div>
-			<div class="studypic"><img class="studypic" src="https://image.webservices.ft.com/v1/images/raw/ftcms:003dcddc-dfa1-11e5-b072-006d8d362ba3?source=ig&width=167" alt="Syria’s ‘mafia-style’ gas deals with jihadis"></div>
+			<div class="studypic"><img class="studypic" src="https://image.webservices.ft.com/v1/images/raw/ftcms:9dbb22f6-e520-11e5-a09b-1f8b0d268c39?source=ig&width=450" alt="Syria’s ‘mafia-style’ gas deals with jihadis"></div>
 			<div id="dynamicBody" class="studybody">${"Tesxt generated from within the script and handled by a variable"}</div>
 			`;
 	}
