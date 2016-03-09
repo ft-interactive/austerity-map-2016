@@ -116,11 +116,11 @@ export function drawmaps (mapData,colDomain, firstRun) {
 				.attr("width" , rw)
 				.attr("height" , rh)
 				.attr("x",5)
-				.attr("y",(i*18)+250);
+				.attr("y",(i*18)+200);
 			legend.append('text')
 				.attr("class", "legend")
 				.attr("x",27)
-				.attr("y",(i*18)+261)
+				.attr("y",(i*18)+211)
 				.html(function() { 
 					if ((i<3) && (mobilewidth>300)) {
 						return "less than £"+Number(colDomain[i])
